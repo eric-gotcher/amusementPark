@@ -1,0 +1,381 @@
+// Color Map
+$colors: (
+    primary: #4C5B62,
+    secondary: #3B6FA1,
+    background: #EBEBEB,
+    secondary1: #77A8D3,
+    secondary2: #A2CAE3
+);
+
+// Button Color Map
+$buttonColors: (
+    primary: #007000,
+    secondary: #D2222D,
+    warning: #FFBF00
+);
+
+//Reset default styles
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+// Body tag
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: map-get($map: $colors, $key: background);
+}
+
+// Navbar
+
+.navbar {
+    background-color: map-get($map: $colors, $key: primary) !important;
+
+    img {
+        margin-left: 15px;
+    }
+
+    .search-bar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: map-get($map: $colors, $key: background) !important;
+        margin-right: 15px;
+        border: none;
+        padding: 0px 10px;
+        border-radius: 25px;
+
+        input {
+            background: none;
+            border: none;
+
+            &:focus {
+                box-shadow: none;
+            }
+        }
+
+        i {
+            opacity: 70%;
+            cursor: pointer;
+        }
+    }
+
+}
+
+.main-container {
+    display: flex;
+
+
+    a {
+        text-decoration: none;
+        color: white;
+    }
+
+    .ride-list-container {
+        width: 280px;
+        height: 300px;
+        position: fixed;
+        z-index: 2;
+        bottom: 80px;
+        left: 20px;
+        border-radius: 25px;
+        color: white;
+        padding: 20px;
+        background-color: map-get($map: $colors, $key: secondary);
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+            width: 5px;
+            margin-right: -10px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: none;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background: map-get($map: $colors, $key: background);
+        }
+
+        &::-webkit-scrollbar-track-piece:end {
+            background: transparent;
+            margin-bottom: 20px;
+        }
+
+        &::-webkit-scrollbar-track-piece:start {
+            background: transparent;
+            margin-top: 20px;
+        }
+
+        .ride-number {
+            padding: 8px 5px;
+            border-radius: 50%;
+            border: 2px solid white;
+            margin-right: 10px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    }
+
+    .map-container {
+        background-image: url('../images/cloud.jpeg');
+        background-size: cover;
+        background-position: center;
+        text-align: right;
+        position: relative;
+
+        .ride-icon {
+            cursor: pointer;
+        }
+    }
+
+
+    .sidebar-container {
+        padding: 10px;
+        box-shadow: inset 0px 4px 10px rgb(45, 44, 44);
+        height: 87vh;
+        overflow: scroll;
+        font-size: 0.8em;
+
+        .filter {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card {
+            background-color: rgb(204, 201, 201);
+            border: none;
+            margin-bottom: 15px;
+
+            input[type="radio"],
+            input[type="checkbox"],
+            .fa-circle-plus {
+                margin-right: 15px;
+            }
+
+            .functional {
+                width: 18px;
+                background: none;
+                border: none;
+                text-align: center;
+                user-select: none;
+                pointer-events: none;
+            }
+
+            .physical {
+                width: 50px;
+                margin-right: 15px;
+            }
+
+            #increase-hand,
+            #decrease-hand,
+            #increase-leg,
+            #decrease-leg {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+#footer {
+    position: fixed;
+    bottom: 0px;
+    background-color: map-get($map: $colors, $key: primary) !important;
+    text-align: center;
+    width: 100%;
+    padding: 20px;
+    color: white;
+    z-index: 7;
+}
+
+.custom-tooltip {
+    --bs-tooltip-bg: #EBEBEB;
+    --bs-tooltip-color: black;
+}
+
+.tooltip-inner {
+    min-width: 400px;
+    border: 2px solid #3B6FA1;
+}
+
+.overlay {
+    width: 100%;
+    height: 86vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    z-index: 3;
+
+    .message-box {
+        background-color: map-get($map: $colors, $key: secondary);
+        color: map-get($map: $colors, $key: background);
+        position: fixed;
+        width: 50vh;
+        height: 30vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 30px;
+        border-radius: 40px;
+    }
+}
+
+.not-searched {
+    opacity: 40%;
+    pointer-events: none;
+}
+
+.description-container {
+    overflow-y: scroll;
+    height: 84vh;
+
+    .top {
+        background-color: map-get($map: $colors, $key: secondary2);
+        margin: 15px auto;
+        width: 90% !important;
+        padding: 12px;
+        text-align: center;
+    }
+
+    .bottom {
+        width: 90% !important;
+        margin: 30px 0 0 90px;
+        column-gap: 60px;
+
+
+        p {
+            text-align: justify;
+        }
+
+        .sensory-container {
+
+            img {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .image-container {
+                position: relative;
+
+                .numbers-container {
+                    position: absolute;
+                    bottom: 32px;
+                    width: 100%;
+                    display: flex;
+
+                    .numbers {
+                        flex: 1;
+                        text-align: center;
+                        font-size: 3em;
+                        color: map-get($map: $buttonColors, $key: secondary);
+                    }
+                }
+            }
+
+        }
+
+        .restriction-container {
+            width: 46%;
+        }
+
+    }
+}
+
+
+.login-background {
+    background-image: url('../images/login_background.png');
+    width: 100%;
+    height: 85vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    .login-container {
+        background-color: map-get($map: $colors, $key: background);
+        width: 40%;
+
+        h2 {
+            background-color: map-get($map: $colors, $key: secondary);
+            color: white;
+        }
+
+        form {
+            width: 50%;
+            margin: auto;
+
+            button {
+                background-color: map-get($map: $colors, $key: secondary);
+                border: none;
+                display: block;
+                margin: auto;
+            }
+        }
+    }
+}
+
+.ride-table-container {
+    width: 80%;
+    margin: auto;
+    margin-bottom: 80px;
+
+    .add {
+        background-color: map-get($map: $colors, $key: secondary);
+        border: none;
+    }
+}
+
+.register-container {
+    width: 40%;
+    margin: auto;
+    border-radius: 30px;
+    border: 1px solid map-get($map: $colors, $key: primary);
+
+    h2 {
+        color: map-get($map: $colors, $key: secondary);
+        font-weight: bold;
+    }
+
+    button {
+        background-color: map-get($map: $colors, $key: secondary);
+        border: none;
+        display: block;
+        margin: auto;
+    }
+}
+
+
+.admin-update {
+    width: 100% !important;
+    height: 100vh !important;
+
+    .login-container {
+        border: 1px solid map-get($map: $colors, $key: primary);
+        padding: 50px;
+        border-radius: 10px;
+        width: 60%;
+        margin: auto;
+
+        img {
+            width: 150px;
+            height: 150px;
+            margin-right: 50px;
+        }
+    }
+}
+
+
+button {
+    &:focus {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+}
