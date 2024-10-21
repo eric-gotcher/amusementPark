@@ -1,9 +1,4 @@
-// Importing the functions needed from the SDKs 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-analytics.js";
-
-// Firebase configuration
+// Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBn7xE-jaEuixzyDROnbHrQo6-YtOR5LaU",
   authDomain: "amusement-park-4039d.firebaseapp.com",
@@ -13,17 +8,18 @@ const firebaseConfig = {
   appId: "1:625618396056:web:ff2907be3a1958ed9041ed",
   measurementId: "G-6QHBHT0PPE"
 };
-// Initializing the Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const analytics = getAnalytics(app);
+
+// Initializing Firebase
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const analytics = firebase.analytics();
 
 // Function to handle login with email and password
 function loginWithEmailPassword() {
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
 
-  signInWithEmailAndPassword(auth, email, password)
+  auth.signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       // Successfully signed in
       const user = userCredential.user;
@@ -37,3 +33,13 @@ function loginWithEmailPassword() {
       alert('Login failed: ' + error.message); // Notifying user of login failure
     });
 }
+
+// Optionally, monitor authentication state
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    console.log('User is authenticated:', user);
+    
+  } else {
+    console.log('User is not authenticated');
+  }
+});
