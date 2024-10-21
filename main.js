@@ -17,3 +17,23 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const analytics = getAnalytics(app);
+
+// Function to handle login with email and password
+function loginWithEmailPassword() {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Successfully signed in
+      const user = userCredential.user;
+      console.log('User logged in:', user);
+
+      // Redirecting to home page after successful login
+      window.location.href = 'home.html';
+    })
+    .catch((error) => {
+      console.error('Error during login:', error);
+      alert('Login failed: ' + error.message); // Notifying user of login failure
+    });
+}
