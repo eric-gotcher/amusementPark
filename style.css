@@ -1,0 +1,64 @@
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background: #f4f4f4; /* You might change this to a more vibrant background or add an image if needed */
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+  padding: 20px;
+  border-radius: 10px; /* More pronounced rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow for depth */
+  width: 300px;
+  backdrop-filter: blur(5px); /* Blur effect for background elements */
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Text shadow for better readability */
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 90%;
+  padding: 8px;
+  margin-top: 9px;
+  border-radius: 7px;
+  border: none;
+  background: rgba(255, 255, 255, 0.5); /* Lighter background for input fields */
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle inner shadow for depth */
+  color: #333; /* Darker text for better visibility */
+  font-size: 16px; /* Larger font size for easier reading */
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background-color: #5cb85c;
+  color: white;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+button:hover {
+  background-color: #4cae4c;
+}
+
+label {
+  display: block;
+  margin-bottom: 2px; /* Space between label and input */
+  color: #666; /* Subtle label color */
+  font-size: 14px; /* Smaller label size for a cleaner look */
+}

@@ -1,0 +1,65 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif; /* Consistent font style */
+}
+
+body, html {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body::before {
+    content: "";
+    position: fixed; /* Fixed position to cover the whole screen */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('images/back.png');
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px); /* Apply blur effect here */
+    z-index: -1; /* Puts the blur behind the content */
+}
+
+.wrapper {
+    width: 350px; /* Adjusted width to better fit the content */
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.6); /* More transparency */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px; /* Rounded corners */
+    backdrop-filter: blur(10px); /* Stronger blur effect */
+}
+
+.form-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 25px; /* Larger text for visibility */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+.form-container p {
+    text-align: center;
+    margin-top: 15px; /* Existing margin, adjust if necessary */
+    font-size: 14px; /* Reduced font size for smaller appearance */
+    color: #666; /* Optional: a lighter color to make it less prominent */
+}
+
+
+input[type="text"], input[type="email"], input[type="password"] {
+    padding: 15px; /* Larger padding for easier interaction */
+    margin-bottom: 10px;
+    border: none; /* Removes border */
+    border-bottom: 2px solid #ccc; /* Adds underline */
+    border-radius: 0; /* Removes rounded corners */
+    background: transparent; /* Ensures inputs do not detract from transparency */
+}
+
