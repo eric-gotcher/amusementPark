@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup Page</title>
+    <title>Login Page</title>
     <link rel="stylesheet" href="css/style.css"> 
 </head>
 <body>
+    <!-- Background blur and layout -->
     <div style="
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #6CB11B; /* Solid green background */
-    background-image: url('images/back.png');
+    background-color: #6CB11B;
+    background-image: url('images/back.png');  <!-- Ensure this path is correct -->
     background-size: cover;
     background-position: center;
     filter: blur(2px);
@@ -32,12 +33,16 @@
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required placeholder="Enter your password">
             </div>
-            <button type="submit">login</button>
+            <button type="submit">Login</button>
         </form>
     </div>
-    <!-- Including Firebase SDKs for Firebase Authentication and App -->
+
+    <!-- Loading Firebase SDKs via script tags -->
     <script src="https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.0.0/firebase-analytics.js"></script>
+
+    <!-- Loading main.js script -->
     <script src="main.js"></script> 
 </body>
 </html>
