@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Started Now</title>
+    <link rel="stylesheet" href="css/loginstyle.css">
+</head>
+<body>
+    <!-- Background Blur Overlay with Green Background -->
+    <div style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #6CB11B; /* Solid green background */
+        background-image: url('images/back.png');
+        background-size: cover;
+        background-position: center;
+        filter: blur(2px);
+        z-index: -1;">
+    </div>
+
+    <!-- Main Content Wrapper -->
+    <div class="wrapper">
+        <div class="form-container">
+            <h2>Get Started Now</h2>
+            <form action="#" method="post">
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email address" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                <button type="submit">Signup</button>
+                <p>Have an account? <a href="http://127.0.0.1:3000/login.html">Sign In</a></p>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

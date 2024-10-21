@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+    <link rel="stylesheet" href="css/style.css"> <!-- Ensure the CSS path matches your file structure -->
+</head>
+<body>
+    <div style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #6CB11B; /* Solid green background */
+    background-image: url('images/back.png');
+    background-size: cover;
+    background-position: center;
+    filter: blur(2px);
+    z-index: -1;">
+    </div>
+
+    <div class="container">
+        <h2>Login</h2>
+        <form action="/home.html" method="post"> <!-- Update action attribute to point to your homepage or login handler -->
+            <div class="input-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email">
+            </div>
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
+            </div>
+            <button type="submit">login</button>
+        </form>
+    </div>
+</body>
+</html>
