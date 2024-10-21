@@ -1,4 +1,4 @@
-// Firebase Configuration
+// Initializing Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyBn7xE-jaEuixzyDROnbHrQo6-YtOR5LaU",
   authDomain: "amusement-park-4039d.firebaseapp.com",
@@ -9,7 +9,7 @@ const firebaseConfig = {
   measurementId: "G-6QHBHT0PPE"
 };
 
-// Initializing Firebase
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const analytics = firebase.analytics();
@@ -25,12 +25,12 @@ function loginWithEmailPassword() {
       const user = userCredential.user;
       console.log('User logged in:', user);
 
-      // Redirecting to home page after successful login
+      // Redirect to home page after successful login
       window.location.href = 'home.html';
     })
     .catch((error) => {
       console.error('Error during login:', error);
-      alert('Login failed: ' + error.message); // Notifying user of login failure
+      alert('Login failed: ' + error.message); // Notify user of login failure
     });
 }
 
