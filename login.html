@@ -1,48 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <link rel="stylesheet" href="css/style.css"> 
+    <title>Create Account</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css"> <!-- Ensure the CSS path is correct -->
+
+    <!-- Favicons (Optional) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+
+    <!-- Defer loading of JavaScript modules -->
+    <script type="module" defer src="register.js"></script> <!-- Ensure this script is your Firebase registration logic -->
 </head>
+
 <body>
-    <!-- Background blur and layout -->
-    <div style="
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #6CB11B;
-    background-image: url('images/back.png');  <!-- Ensure this path is correct -->
-    background-size: cover;
-    background-position: center;
-    filter: blur(2px);
-    z-index: -1;">
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
     </div>
 
-    <div class="container">
-        <h2>Login</h2>
-        <form id="loginForm" onsubmit="loginWithEmailPassword(); return false;">
-            <div class="input-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required placeholder="Enter your email">
-            </div>
-            <div class="input-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required placeholder="Enter your password">
-            </div>
-            <button type="submit">Login</button>
-        </form>
-    </div>
+    <form>
+        <h3>Create Account</h3>
 
-    <!-- Loading Firebase SDKs via script tags -->
-    <script src="https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.0.0/firebase-analytics.js"></script>
+        <!-- Input for Email -->
+        <label for="email">Email</label>
+        <input type="email" placeholder="Email" id="email" required>
 
-    <!-- Loading main.js script -->
-    <script src="main.js"></script> <!-- Ensure your path to main.js is correct -->
+        <!-- Input for Password -->
+        <label for="password">Password</label>
+        <input type="password" placeholder="Password" id="password" required>
+
+        <!-- Submit Button -->
+        <button id="submit" type="submit">Create Account</button>
+
+        <!-- Social Media Login (Optional) -->
+        <div class="social">
+            <div class="go" id="google"><i class="fab fa-google"></i> Google</div>
+            <div class="fb" id="facebook"><i class="fab fa-facebook"></i> Facebook</div>
+        </div>
+
+        <!-- Redirect to login page -->
+        <div class="form">
+            <p>Have an account?
+                <span> <a href="index.html">Login Here</a></span>
+            </p>
+        </div>
+    </form>
 </body>
+
 </html>
