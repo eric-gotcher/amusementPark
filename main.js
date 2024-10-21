@@ -48,8 +48,8 @@ submit.addEventListener("click", function (event) {
         .then((userCredential) => {
             // Account created successfully
             const user = userCredential.user;
-            alert("Account created successfully. Redirecting to dashboard...");
-            window.location.href = "home.html"; 
+            alert("Account created successfully. Redirecting...");
+            window.location.href = "home.html";  // Adjust to your desired page after account creation
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -57,4 +57,5 @@ submit.addEventListener("click", function (event) {
             alert("Error: " + errorMessage);
         });
 });
+
 
