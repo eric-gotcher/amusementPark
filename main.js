@@ -1,4 +1,8 @@
-// Initializing Firebase
+// Importing the Firebase SDK modules
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+// Firebase configuration 
 const firebaseConfig = {
   apiKey: "AIzaSyBn7xE-jaEuixzyDROnbHrQo6-YtOR5LaU",
   authDomain: "amusement-park-4039d.firebaseapp.com",
@@ -10,36 +14,47 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const analytics = firebase.analytics();
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-// Function to handle login with email and password
-function loginWithEmailPassword() {
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
+// Get submit button and add event listener
+const submit = document.getElementById("submit");
+submit.addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent form submission
 
-  auth.signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      // Successfully signed in
-      const user = userCredential.user;
-      console.log('User logged in:', user);
+    // Get email and password values
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-      // Redirect to home page after successful login
-      window.location.href = 'home.html';
-    })
-    .catch((error) => {
-      console.error('Error during login:', error);
-      alert('Login failed: ' + error.message); // Notify user of login failure
-    });
-}
+    // Input validation
+    if (email.trim() === "" || password.trim() === "") {
+        alert("Email and password cannot be empty");
+        return;
+    }
 
-// Optionally, monitor authentication state
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    console.log('User is authenticated:', user);
-    
-  } else {
-    console.log('User is not authenticated');
-  }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert("Invalid email format");
+        return;
+    }
+
+    if (password.length < 6) {
+        alert("Password must be at least 6 characters long");
+        return;
+    }
+
+    // Create user with email and password using Firebase Authentication
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Account created successfully
+            const user = userCredential.user;
+            alert("Account created successfully. Redirecting to dashboard...");
+            window.location.href = "home.html"; // Redirect to dashboard or another page
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert("Error: " + errorMessage);
+        });
 });
+
