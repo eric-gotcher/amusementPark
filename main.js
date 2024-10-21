@@ -49,7 +49,7 @@ submit.addEventListener("click", function (event) {
             // Account created successfully
             const user = userCredential.user;
             alert("Account created successfully. Redirecting to dashboard...");
-            window.location.href = "home.html"; // Redirect to dashboard or another page
+            window.location.href = "home.html"; 
         })
         .catch((error) => {
             const errorCode = error.code;
