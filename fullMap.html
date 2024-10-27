@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Show My Location and Default Location</title>
+    <style>
+        /* Define the size of the map container */
+        #map {
+            height: 500px;
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+
+<h3>My Location and Default Location on Map</h3>
+<div id="map"></div>
+
+<button onclick="showMarkers()">Show Markers</button>
+<button onclick="hideMarkers()">Hide Markers</button>
+
+<script>
+var map, userMarker, defaultMarker;
+var markers = []; // Array to hold all markers
+var infoWindow;   // InfoWindow to show titles
+
+// Define the target default location 
+var defaultLocation = { lat: 32.7561025211987, lng: -97.07243375722175 }; 
+
+// Function to show all markers
+function showMarkers() {
+    markers.forEach(marker => marker.setMap(map));
+}
+
+// Function to hide all markers
+function hideMarkers() {
+    markers.forEach(marker => marker.setMap(null));
+}
+
+// Function to add a marker with a title and attach an InfoWindow
+function addMarker(location, title) {
+    const marker = new google.maps.Marker({
+        position: location,
+        map: map
+    });
+    markers.push(marker); // Add the marker to the markers array
+
+    // Create an InfoWindow and open it on marker click
+    google.maps.event.addListener(marker, 'click', function() {
+        if (infoWindow) infoWindow.close(); // Close any open InfoWindows
+        infoWindow = new google.maps.InfoWindow({
+            content: title
+        });
+        infoWindow.open(map, marker);
+    });
+}
+
+// Initialize and add the map
+function initMap() {
+    // Create the map centered at the default location
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 16,
+        center: defaultLocation
+    });
+
+    // Create a marker for the default location and store it in the array
+    defaultMarker = new google.maps.Marker({
+        position: defaultLocation,
+        map: map
+    });
+    markers.push(defaultMarker); // Add the default marker to the markers array
+
+    addMarker({lat: 32.75694774660049, lng: -97.06858634954958}, 'Aquaman');
+    addMarker({lat: 32.75867956518985, lng: -97.0665944558818}, 'Batman');
+    addMarker({lat: 32.757562316535875, lng: -97.067054891455}, 'Batwing');
+    addMarker({lat: 32.75775980664769, lng: -97.06749839143542}, 'Boomtown');
+    addMarker({lat: 32.757154197253314, lng: -97.0720959368577}, 'Boot Scootin');
+    addMarker({lat: 32.75637875518429, lng: -97.06841704130149}, 'Bugs Cloud Bouncer');
+    addMarker({lat: 32.75726920754156, lng: -97.06628719155061}, 'Catwoman Whip');
+    addMarker({lat: 32.75687916891457, lng: -97.06778361202024}, 'Cloud Bouncer');
+    addMarker({lat: 32.75912726546584, lng: -97.06800230384427}, 'Bucket Blasters');
+    addMarker({lat: 32.755825529397704, lng: -97.07200652921023}, 'El Diablo');
+    addMarker({lat: 32.755489433620255, lng: -97.0709131848416}, 'Sombrero');
+    addMarker({lat: 32.75323847916851, lng: -97.06802371184325}, 'Judge Roy Scream');
+    addMarker({lat: 32.757991473958874, lng: -97.0677503492011}, 'Gunslinger');
+    addMarker({lat: 32.75731315275531, lng: -97.06689389616429}, 'Justice League');
+    addMarker({lat: 32.755669332272035, lng: -97.07129106781014}, 'Tea Cups');
+    addMarker({lat: 32.75548781011889, lng: -97.07155711109925}, 'La Vibora');
+    addMarker({lat: 32.75784178390764, lng: -97.06661224784125}, 'Mr. Freeze');
+    addMarker({lat: 32.758886637131965, lng: -97.07057433567623}, 'Shock Wave');
+    addMarker({lat: 32.758384840744206, lng: -97.06868454595156}, 'Superman');
+    addMarker({lat: 32.7570749439281, lng: -97.07255299151078}, 'Texas Depot');
+    addMarker({lat: 32.75676784036096, lng: -97.0658927520594}, 'Texas SkyScreamer');
+    addMarker({lat: 32.75685106292408, lng: -97.0652765520594}, 'Riddler');
+    addMarker({lat: 32.7557677102804, lng: -97.07418512037097}, 'Titan');
+
+    // Start tracking the user's location
+    trackUserLocation();
+}
+
+// Function to track the user's location
+function trackUserLocation() {
+    if (navigator.geolocation) {
+        // Watch the position and update the user's marker in real-time
+        navigator.geolocation.watchPosition(
+            updateUserLocation, // Callback for position updates
+            showError, // Error handling
+            { enableHighAccuracy: true } // High accuracy for better tracking
+        );
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+}
+
+// Function to update the user's position
+function updateUserLocation(position) {
+    var userLocation = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+    };
+
+    // If the user marker doesn't exist, create it
+    if (!userMarker) {
+        userMarker = new google.maps.Marker({
+            position: userLocation,
+            map: map,
+            title: 'My Location',
+            icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png' // Blue dot for user's location
+        });
+        markers.push(userMarker); // Add user marker to markers array
+    } else {
+        // Update the user marker's position
+        userMarker.setPosition(userLocation);
+    }
+
+    // Optionally: Adjust the map bounds to show both markers
+    var bounds = new google.maps.LatLngBounds();
+    bounds.extend(userMarker.getPosition());
+    bounds.extend(defaultMarker.getPosition());
+    map.fitBounds(bounds); // Adjust the map to fit both locations
+}
+
+// Error handling for Geolocation API
+function showError(error) {
+    switch (error.code) {
+        case error.PERMISSION_DENIED:
+            alert("User denied the request for Geolocation.");
+            break;
+        case error.POSITION_UNAVAILABLE:
+            alert("Location information is unavailable.");
+            break;
+        case error.TIMEOUT:
+            alert("The request to get user location timed out.");
+            break;
+        case error.UNKNOWN_ERROR:
+            alert("An unknown error occurred.");
+            break;
+    }
+}
+</script>
+
+<!-- Load the Google Maps API with API key -->
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIj_NqWo62GER45QxwIjmrTLR82rHT83U&callback=initMap">
+</script>
+
+</body>
+</html>
