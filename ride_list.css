@@ -46,8 +46,7 @@ header {
     display: flex;
 }
 
-.left-nav .nav-link,
-.right-nav .nav-link {
+.left-nav .nav-link {
     margin: 0 15px; 
     color: white;
     padding: 15px 10px;
@@ -57,8 +56,18 @@ header {
     align-self: center;
 }
 
+.right-nav .nav-link {
+    margin: 0 15px; 
+    color: white;
+    padding: 15px 40px 10px 10px;
+    text-decoration: none; 
+    font-size: 18px;
+    font-weight: bold; 
+    align-self: center;
+}
 
-.right-nav .preference{
+
+.right-nav .preference {
     margin: 0 15px;
     display: inline-block;
     background-color: #ffae00;
