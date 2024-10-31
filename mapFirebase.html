@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Show My Location and Default Location</title>
     <style>
         #map {
@@ -21,7 +23,10 @@
 <button onclick="showMarkersByRating('C')">Show Category C Rides</button>
 
 <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js"></script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIj_NqWo62GER45QxwIjmrTLR82rHT83U&callback=initMap">
+</script>
 
 <script>
     // Initialize Firebase
@@ -29,33 +34,70 @@
         apiKey: "AIzaSyBn7xE-jaEuixzyDROnbHrQo6-YtOR5LaU", 
         authDomain: "amusement-park-4039d.firebaseapp.com", 
         projectId: "amusement-park-4039d", 
-        storageBucket: "amusement-park-4039d.firebasestorage.app", 
+        storageBucket: "amusement-park-4039d.appspot.com", 
         messagingSenderId: "625618396056", 
         appId: "1:625618396056:web:ff2907be3a1958ed9041ed", 
         measurementId: "G-6QHBHT0PPE" 
     };
+    
+    // Initialize Firebase App
     const app = firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
+    const db = firebase.firestore(app); // Initialize Firestore with the app instance
 
-    var map, userMarker, defaultMarker;
-    var markers = [];
-    var infoWindow;
-    var defaultLocation = { lat: 32.7561025211987, lng: -97.07243375722175 };
+    let map, userMarker, defaultMarker;
+    let markers = [];
+    let infoWindow;
+    const defaultLocation = { lat: 32.7561025211987, lng: -97.07243375722175 };
 
-    // Show all markers
+    const markersData = [
+        { lat: 32.75694773643941, lng: -97.0688059590769, title: 'Aquaman', category: 'A' },
+        { lat: 32.75853517890613, lng: -97.06668028976839, title: 'Batman', category: 'B' },
+        { lat: 32.757562316535875, lng: -97.067054891455, title: 'Batwing', category: 'C' },
+        { lat: 32.75775980664769, lng: -97.06749839143542, title: 'Boomtown', category: 'A' },
+        { lat: 32.757154197253314, lng: -97.0720959368577, title: 'Boot Scootin', category: 'B' },
+        { lat: 32.75637875518429, lng: -97.06841704130149, title: 'Bugs Cloud Bouncer', category: 'C' },
+        { lat: 32.75726920754156, lng: -97.06628719155061, title: 'Catwoman Whip', category: 'A' },
+        { lat: 32.75687916891457, lng: -97.06778361202024, title: 'Cloud Bouncer', category: 'B' },
+        { lat: 32.75912726546584, lng: -97.06800230384427, title: 'Bucket Blasters', category: 'C' },
+        { lat: 32.755825529397704, lng: -97.07200652921023, title: 'El Diablo', category: 'A' },
+        { lat: 32.755489433620255, lng: -97.0709131848416, title: 'Sombrero', category: 'B' },
+        { lat: 32.75323847916851, lng: -97.06802371184325, title: 'Judge Roy Scream', category: 'C' },
+        { lat: 32.757991473958874, lng: -97.0677503492011, title: 'Gunslinger', category: 'A' },
+        { lat: 32.75731315275531, lng: -97.06689389616429, title: 'Justice League', category: 'B' },
+        { lat: 32.755669332272035, lng: -97.07129106781014, title: 'Tea Cups', category: 'C' },
+        { lat: 32.75548781011889, lng: -97.07155711109925, title: 'La Vibora', category: 'A' },
+        { lat: 32.75784178390764, lng: -97.06661224784125, title: 'Mr. Freeze', category: 'B' },
+        { lat: 32.758886637131965, lng: -97.07057433567623, title: 'Shock Wave', category: 'C' },
+        { lat: 32.758384840744206, lng: -97.06868454595156, title: 'Superman', category: 'A' },
+        { lat: 32.7570749439281, lng: -97.07255299151078, title: 'Texas Depot', category: 'B' },
+        { lat: 32.75676784036096, lng: -97.0658927520594, title: 'Texas SkyScreamer', category: 'C' },
+        { lat: 32.75685106292408, lng: -97.0652765520594, title: 'Riddler', category: 'A' },
+        { lat: 32.7557677102804, lng: -97.07418512037097, title: 'Titan', category: 'B' },
+    ];
+
+    function addMarkersToFirestore() {
+        markersData.forEach(marker => {
+            db.collection("locations").add(marker)
+                .then(() => {
+                    console.log(`Marker for ${marker.title} added successfully!`);
+                })
+                .catch(error => {
+                    console.error("Error adding marker: ", error);
+                });
+        });
+    }
+
     function showAllMarkers() {
         markers.forEach(marker => marker.setMap(map));
     }
 
-    // Hide all markers
     function hideAllMarkers() {
         markers.forEach(marker => marker.setMap(null));
     }
 
-    // Show markers by accessRating
     function showMarkersByRating(rating) {
         markers.forEach(marker => {
-            if (marker.accessRating === rating) {
+            if (marker.category === rating) {
                 marker.setMap(map);
             } else {
                 marker.setMap(null);
@@ -63,13 +105,12 @@
         });
     }
 
-    // Add a marker based on data from Firebase
-    function addMarkerFromData(location, title, accessRating) {
+    function addMarkerFromData(location, title, category) {
         const marker = new google.maps.Marker({
             position: location,
             map: map,
             title: title,
-            accessRating: accessRating
+            category: category
         });
         markers.push(marker);
 
@@ -80,37 +121,34 @@
         });
     }
 
-    // Load markers from Firebase and add them to the map
-    function loadMarkersFromFirebase() {
-        database.ref('rides').on('child_added', (snapshot) => {
-            const data = snapshot.val();
-            const location = { lat: data.lat, lng: data.lng };
-            addMarkerFromData(location, data.name, data.accessRating);
+    function loadMarkersFromFirestore() {
+        db.collection("locations").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const location = { lat: data.lat, lng: data.lng };
+                addMarkerFromData(location, data.title, data.category);
+            });
+        }).catch(error => {
+            console.error("Error loading markers: ", error);
         });
     }
 
-    // Initialize and add the map
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
             zoom: 16,
             center: defaultLocation
         });
 
-        // Create marker for the default location
         defaultMarker = new google.maps.Marker({
             position: defaultLocation,
             map: map
         });
         markers.push(defaultMarker);
 
-        // Load all markers from Firebase
-        loadMarkersFromFirebase();
-
-        // Start tracking user location
+        loadMarkersFromFirestore();
         trackUserLocation();
     }
 
-    // Track user location and update marker
     function trackUserLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.watchPosition(
@@ -123,32 +161,25 @@
         }
     }
 
-    // Update user's position on the map
     function updateUserLocation(position) {
         const userLocation = {
             lat: position.coords.latitude,
             lng: position.coords.longitude
         };
 
-        if (!userMarker) {
+        if (userMarker) {
+            userMarker.setPosition(userLocation);
+        } else {
             userMarker = new google.maps.Marker({
                 position: userLocation,
                 map: map,
-                title: 'My Location',
-                icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+                title: "You are here"
             });
-            markers.push(userMarker);
-        } else {
-            userMarker.setPosition(userLocation);
+            map.setCenter(userLocation);
+            map.fitBounds(new google.maps.LatLngBounds(defaultLocation, userLocation));
         }
-
-        const bounds = new google.maps.LatLngBounds();
-        bounds.extend(userMarker.getPosition());
-        bounds.extend(defaultMarker.getPosition());
-        map.fitBounds(bounds);
     }
 
-    // Geolocation error handling
     function showError(error) {
         switch (error.code) {
             case error.PERMISSION_DENIED:
@@ -165,10 +196,8 @@
                 break;
         }
     }
+
+    window.addEventListener('load', addMarkersToFirestore);
 </script>
-
-<!-- Load the Google Maps API -->
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIj_NqWo62GER45QxwIjmrTLR82rHT83U&callback=initMap"></script>
-
 </body>
 </html>
