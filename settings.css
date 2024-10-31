@@ -13,6 +13,8 @@ body, html {
     display: flex;
     justify-content: left;
     align-items: center;
+    position: fixed;
+    width: 100%;
 }
 
 .nav-item {
@@ -38,18 +40,23 @@ body, html {
 
 /* Settings panel styling */
 .settings-panel {
-    background-color: rgba(160, 103, 79, 0.9); 
+    margin-top: 80px;
+    background-color: rgba(160, 103, 79, 0.95); 
     padding: 30px;
-    border-radius: 15px;
-    max-width: 400px;
-    width: 90%;
+    border-radius: 30px;
+    max-width: 600px;
+    transform: skewY(-2.5deg);
+    height: 75%;
+    width: 100%;
     color: white;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .settings-panel h2 {
     margin-top: 0;
-    font-size: 24px;
+    font-size: 48px;
+    text-align: center;
+    transform: skewY(2.5deg);
 }
 
 /* Individual setting rows */
@@ -58,6 +65,7 @@ body, html {
     justify-content: space-between;
     align-items: center;
     margin-top: 20px;
+    transform: skewY(2.5deg);
 }
 
 .setting span {

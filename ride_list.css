@@ -23,54 +23,64 @@ z-index: -1;
 }
 
 header {
-    background: rgba(68, 55, 255, 0.829);
+    background: rgba(68, 55, 255);
     color: white;
     padding: 10px 20px;
     text-align: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
 }
 
 .navbar {
     display: flex;
     justify-content: space-between; 
     align-items: center; 
-    padding: 0 20px; 
+    padding: 0 20px;
 }
 
 .left-nav,
 .right-nav {
-    display: flex; 
+    display: flex;
 }
 
 .left-nav .nav-link,
-.right-nav .preference,
 .right-nav .nav-link {
     margin: 0 15px; 
-    color: white; 
+    color: white;
+    padding: 15px 10px;
     text-decoration: none; 
-    font-size: 18px; 
+    font-size: 18px;
+    font-weight: bold; 
     align-self: center;
 }
 
 
-.preference{
+.right-nav .preference{
+    margin: 0 15px;
     display: inline-block;
     background-color: #ffae00;
     color: rgb(0, 0, 0);
     padding: 15px 30px;
     font-size: 18px;
+    font-weight: bold; 
     border-radius: 8px;
     text-decoration: none;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
+.blank{
+    margin-top: 75px;
+}
+
 .ride-container {
     display: flex;
     align-items: center;
-    margin: 20px; 
+    margin-top: 30px; 
     padding: 10px;
-    background-color: #f9f9f9; 
     border-radius: 8px; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
     flex: 1;
 }
 
