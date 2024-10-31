@@ -14,8 +14,6 @@ body, html {
     justify-content: flex-start;
     align-items: center;
     gap: 20px;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
 }
 
 .nav-item {
@@ -26,7 +24,7 @@ body, html {
 
 /* Background container */
 .background {
-    background-image: url("C:/Users/ayaro/OneDrive/Desktop/parkMap/background.png");
+    background-image: url("back.png");
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -38,7 +36,7 @@ body, html {
 
 /* Settings panel styling */
 .settings-panel {
-    background-color: rgba(160, 103, 79, 0.9); /* Semi-transparent brown */
+    background-color: rgba(160, 103, 79, 0.9); 
     padding: 30px;
     border-radius: 15px;
     max-width: 400px;
