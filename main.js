@@ -1,4 +1,4 @@
-// Import Firebase SDK modules
+// Importing the Firebase SDK modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
@@ -20,14 +20,14 @@ const auth = getAuth(app);
 // Get submit button and add event listener
 const submit = document.getElementById("submit");
 submit.addEventListener("click", function (event) {
-    event.preventDefault();
+    event.preventDefault(); // Prevent form submission
 
+    // Get email and password values
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirm_password").value;
 
     // Input validation
-    if (email.trim() === "" || password.trim() === "" || confirmPassword.trim() === "") {
+    if (email.trim() === "" || password.trim() === "") {
         alert("Email and password cannot be empty");
         return;
     }
@@ -43,19 +43,17 @@ submit.addEventListener("click", function (event) {
         return;
     }
 
-    if (password !== confirmPassword) {
-        alert("Passwords do not match.");
-        return;
-    }
-
-    // Create user with email and password
+    // Create user with email and password using Firebase Authentication
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
+            // Account created successfully
+            const user = userCredential.user;
             alert("Account created successfully. Redirecting...");
-            window.location.href = "home.html";
+            window.location.href = "home.html";  // Adjust to your desired page after account creation
         })
         .catch((error) => {
-            alert("Error: " + error.message);
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert("Error: " + errorMessage);
         });
 });
-
