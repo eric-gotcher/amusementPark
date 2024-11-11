@@ -25,6 +25,7 @@
 var map, userMarker, defaultMarker;
 var markers = []; // Initialize an array to hold all markers
 var infoWindow;   // InfoWindow to show titles
+var directionsService, directionsRenderer; // Directions service and renderer for navigation
 
 // Define the default location 
 var defaultLocation = { lat: 32.7561025211987, lng: -97.07243375722175 }; 
@@ -47,7 +48,6 @@ function applySettings() {
     console.log("Applied settings:", showCategoryA, showCategoryB, showCategoryC); // Debugging log
 }
 
-
 // Function to show markers of a specific accessRating
 function showMarkersByRating(rating) {
     markers.forEach(marker => {
@@ -69,23 +69,48 @@ function hideAllMarkers() {
     markers.forEach(marker => marker.setMap(null));
 }
 
+// Function to display route
+function displayRoute(origin, destination) {
+    directionsService.route(
+        {
+            origin: origin,
+            destination: destination,
+            travelMode: google.maps.TravelMode.WALKING
+        },
+        function(response, status) {
+            if (status === google.maps.DirectionsStatus.OK) {
+                directionsRenderer.setDirections(response);
+            } else {
+                alert('Could not display route due to: ' + status);
+            }
+        }
+    );
+}
+
 // Function to add a marker with a title, accessRating, and attach an InfoWindow
 function addMarker(location, title, accessRating) {
     const marker = new google.maps.Marker({
         position: location,
         map: map,
         title: title,
-        accessRating: accessRating // Assign accessRating to marker
+        accessRating: accessRating
     });
-    markers.push(marker); // Add the marker to the markers array
+    markers.push(marker);
 
-    // Create an InfoWindow and open it on marker click
+    // Single-click to show marker info in an info window
     google.maps.event.addListener(marker, 'click', function() {
-        if (infoWindow) infoWindow.close(); // Close any open InfoWindows
-        infoWindow = new google.maps.InfoWindow({
-            content: title
-        });
+        if (infoWindow) infoWindow.close();
+        infoWindow = new google.maps.InfoWindow({ content: title });
         infoWindow.open(map, marker);
+    });
+
+    // Double-click to trigger route display
+    google.maps.event.addListener(marker, 'dblclick', function() {
+        if (userMarker) {
+            displayRoute(defaultMarker.getPosition(), marker.getPosition());
+        } else {
+            alert("User location not available yet.");
+        }
     });
 }
 
@@ -96,6 +121,11 @@ function initMap() {
         zoom: 16,
         center: defaultLocation
     });
+
+    // Initialize DirectionsService and DirectionsRenderer
+    directionsService = new google.maps.DirectionsService();
+    directionsRenderer = new google.maps.DirectionsRenderer();
+    directionsRenderer.setMap(map);
 
     // Create a marker for the default location and store it in the array
     defaultMarker = new google.maps.Marker({
@@ -165,18 +195,29 @@ function updateUserLocation(position) {
             position: userLocation,
             map: map,
             title: 'My Location',
-            icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png' // Blue dot for user's location
+            icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
         });
-        markers.push(userMarker); // Add user marker to markers array
+
+        // Add the user marker to the map
+        markers.push(userMarker); // Add the user's marker to the array
+
+        // Add a listener to the user's marker to trigger route on double-click
+        google.maps.event.addListener(userMarker, 'dblclick', function() {
+            markers.forEach(marker => {
+                if (marker !== userMarker) {
+                    displayRoute(userMarker.getPosition(), marker.getPosition());
+                }
+            });
+        });
     } else {
-        // Update the user marker's position
+        // Update the user's marker position if it already exists
         userMarker.setPosition(userLocation);
     }
 }
 
-// Error handling for Geolocation API
+// Error handling for geolocation
 function showError(error) {
-    switch (error.code) {
+    switch(error.code) {
         case error.PERMISSION_DENIED:
             alert("User denied the request for Geolocation.");
             break;
@@ -191,12 +232,11 @@ function showError(error) {
             break;
     }
 }
+
 </script>
 
-<!-- Load the Google Maps API with API key -->
-<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIj_NqWo62GER45QxwIjmrTLR82rHT83U&callback=initMap">
-</script>
+<!-- Include the Google Maps JavaScript API (replace YOUR_API_KEY with your actual key) -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIj_NqWo62GER45QxwIjmrTLR82rHT83U&callback=initMap&libraries=places" async defer></script>
 
 </body>
 </html>
