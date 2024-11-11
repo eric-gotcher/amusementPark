@@ -71,6 +71,12 @@
         function updateSetting(category, isChecked) {
             localStorage.setItem(`showCategory${category}`, isChecked);
         }
+// Ensuring checkboxes are updated based on local storage on page load
+    window.onload = function() {
+        document.getElementById('categoryA').checked = localStorage.getItem('showCategoryA') === 'true';
+        document.getElementById('categoryB').checked = localStorage.getItem('showCategoryB') === 'true';
+        document.getElementById('categoryC').checked = localStorage.getItem('showCategoryC') === 'true';
+    };
  </script>
 </body>
 </html>
