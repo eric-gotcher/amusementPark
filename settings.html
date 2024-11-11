@@ -20,51 +20,45 @@
         </div> 
     </div>
 
-    <!-- Background and Settings Panel -->
-    <div class="background">
-        <div class="settings-panel">
-            <h2>Settings</h2>
-            <div class="setting">
-                <span>settings-1</span>
-                <span>setting description</span>
-                <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider round"></span>
-                </label>
-            </div>
-            <div class="setting">
-                <span>settings-2</span>
-                <span>setting description</span>
-                <label class="switch">
-                    <input type="checkbox" checked>
-                    <span class="slider round"></span>
-                </label>
-            </div>
-            <div class="setting">
-                <span>settings-3</span>
-                <span>setting description</span>
-                <label class="switch">
-                    <input type="checkbox" checked>
-                    <span class="slider round"></span>
-                </label>
-            </div>
-            <div class="setting">
-                <span>settings-4</span>
-                <span>setting description</span>
-                <label class="switch">
-                    <input type="checkbox" checked>
-                    <span class="slider round"></span>
-                </label>
-            </div>
-            <div class="setting">
-                <span>settings-5</span>
-                <span>setting description</span>
-                <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider round"></span>
-                </label>
-            </div>
-        </div>
+    <div class="settings-panel">
+    <h2>Settings</h2>
+    
+    <div class="setting">
+        <span>Show Category A Rides</span>
+        <label class="switch">
+            <input type="checkbox" id="categoryA" onchange="updateSetting('A', this.checked)">
+            <span class="slider round"></span>
+        </label>
     </div>
+    
+    <div class="setting">
+        <span>Show Category B Rides</span>
+        <label class="switch">
+            <input type="checkbox" id="categoryB" onchange="updateSetting('B', this.checked)">
+            <span class="slider round"></span>
+        </label>
+    </div>
+    
+    <div class="setting">
+        <span>Show Category C Rides</span>
+        <label class="switch">
+            <input type="checkbox" id="categoryC" onchange="updateSetting('C', this.checked)">
+            <span class="slider round"></span>
+        </label>
+    </div>
+</div>
+    
+<script>
+        // Function to update localStorage with the selected category setting
+        function updateSetting(category, isChecked) {
+            localStorage.setItem(`showCategory${category}`, isChecked);
+        }
+// Ensuring checkboxes are updated based on local storage on page load
+    window.onload = function() {
+        document.getElementById('categoryA').checked = localStorage.getItem('showCategoryA') === 'true';
+        document.getElementById('categoryB').checked = localStorage.getItem('showCategoryB') === 'true';
+        document.getElementById('categoryC').checked = localStorage.getItem('showCategoryC') === 'true';
+    };
+ </script>
 </body>
 </html>
