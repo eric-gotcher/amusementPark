@@ -20,33 +20,35 @@
         </div> 
     </div>
 
-    <div class="settings-panel">
-    <h2>Settings</h2>
-    
-    <div class="setting">
-        <span>Show Category A Rides</span>
-        <label class="switch">
-            <input type="checkbox" id="categoryA" onchange="updateSetting('A', this.checked)">
-            <span class="slider round"></span>
-        </label>
+    <div class="background">
+        <div class="settings-panel">
+            <h2>Settings</h2>
+            
+            <div class="setting">
+                <span>Show Category A Rides</span>
+                <label class="switch">
+                    <input type="checkbox" id="categoryA" onchange="updateSetting('A', this.checked)">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            
+            <div class="setting">
+                <span>Show Category B Rides</span>
+                <label class="switch">
+                    <input type="checkbox" id="categoryB" onchange="updateSetting('B', this.checked)">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            
+            <div class="setting">
+                <span>Show Category C Rides</span>
+                <label class="switch">
+                    <input type="checkbox" id="categoryC" onchange="updateSetting('C', this.checked)">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
     </div>
-    
-    <div class="setting">
-        <span>Show Category B Rides</span>
-        <label class="switch">
-            <input type="checkbox" id="categoryB" onchange="updateSetting('B', this.checked)">
-            <span class="slider round"></span>
-        </label>
-    </div>
-    
-    <div class="setting">
-        <span>Show Category C Rides</span>
-        <label class="switch">
-            <input type="checkbox" id="categoryC" onchange="updateSetting('C', this.checked)">
-            <span class="slider round"></span>
-        </label>
-    </div>
-</div>
     
 <script>
         // Function to update localStorage with the selected category setting

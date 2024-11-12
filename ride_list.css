@@ -12,13 +12,12 @@ content: '';
 position: fixed;
 top: 0;
 left: 0;
-width: 100%;
-height: 100%;
 background-color: #6CB11B;
 background-image: url('back.png'); 
 background-size: cover;
 background-position: center;
-opacity: 0.8; 
+height: 100vh;
+width: 100vw;
 z-index: -1; 
 }
 
@@ -35,10 +34,11 @@ header {
 }
 
 .navbar {
+    background-color: #a0674f;
+    padding: 0 10px;
     display: flex;
     justify-content: space-between; 
-    align-items: center; 
-    padding: 0 20px;
+    align-items: center;
 }
 
 .left-nav,
@@ -59,7 +59,7 @@ header {
 .right-nav .nav-link {
     margin: 0 15px; 
     color: white;
-    padding: 15px 40px 10px 10px;
+    padding: 15px 38px 10px 10px;
     text-decoration: none; 
     font-size: 18px;
     font-weight: bold; 
