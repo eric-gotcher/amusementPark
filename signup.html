@@ -6,12 +6,12 @@
     <title>Get Started Now</title>
     <link rel="stylesheet" href="loginstyle.css">
 
-    <!-- Firebase Setup (Identical to login.html) -->
+    <!-- Firebase Setup (Same as login.html) -->
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js"></script>
 
     <script>
-        // Firebase Configuration (Same as in login.html)
+        // Firebase Configuration (Ensure these values are exactly the same as login.html)
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_AUTH_DOMAIN",
@@ -22,8 +22,13 @@
         };
 
         // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
+        const app = firebase.initializeApp(firebaseConfig);
+        let auth;
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            // Initialize auth after Firebase has been fully loaded
+            auth = firebase.auth();
+        });
     </script>
 </head>
 <body>
@@ -74,6 +79,12 @@
             }
 
             try {
+                // Ensure auth is defined
+                if (!auth) {
+                    alert("Firebase authentication is not initialized. Please try again.");
+                    return;
+                }
+
                 // Create user with email and password
                 await auth.createUserWithEmailAndPassword(email, password);
                 alert("Signup successful! Redirecting to login page...");
@@ -86,3 +97,4 @@
     </script>
 </body>
 </html>
+
