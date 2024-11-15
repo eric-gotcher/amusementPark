@@ -41,9 +41,17 @@
             </div>
             
             <div class="setting">
-                <span>Show Rides for ____</span>
+                <span>Show _____</span>
                 <label class="switch">
                     <input type="checkbox" id="categoryC" onchange="updateSetting('C', this.checked)">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+
+            <div class="setting">
+                <span>Show Inaccessible Rides</span>
+                <label class="switch">
+                    <input type="checkbox" id="categoryD" onchange="updateSetting('D', this.checked)">
                     <span class="slider round"></span>
                 </label>
             </div>
@@ -60,6 +68,7 @@
         document.getElementById('categoryA').checked = localStorage.getItem('showCategoryA') === 'true';
         document.getElementById('categoryB').checked = localStorage.getItem('showCategoryB') === 'true';
         document.getElementById('categoryC').checked = localStorage.getItem('showCategoryC') === 'true';
+        document.getElementById('categoryD').checked = localStorage.getItem('showCategoryD') === 'true';
     };
  </script>
 </body>

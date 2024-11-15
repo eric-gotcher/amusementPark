@@ -55,7 +55,7 @@ function initMap() {
     addMarker({ lat: 32.758886637131965, lng: -97.07057433567623 }, 'Shock Wave', ['C']);
     addMarker({ lat: 32.758384840744206, lng: -97.06868454595156 }, 'Superman', ['A']);
     addMarker({ lat: 32.7570749439281, lng: -97.07255299151078 }, 'Texas Depot', ['B']);
-    addMarker({ lat: 32.75676784036096, lng: -97.0658927520594 }, 'Texas SkyScreamer', ['C']);
+    addMarker({ lat: 32.75676784036096, lng: -97.0658927520594 }, 'Texas SkyScreamer', ['C', 'D']);
     addMarker({ lat: 32.75685106292408, lng: -97.0652765520594 }, 'Riddler', ['A']);
     addMarker({ lat: 32.7557677102804, lng: -97.07418512037097 }, 'Titan', ['B']);
 
@@ -86,13 +86,15 @@ function applySettings() {
     var showCategoryA = localStorage.getItem('showCategoryA') === 'true';
     var showCategoryB = localStorage.getItem('showCategoryB') === 'true';
     var showCategoryC = localStorage.getItem('showCategoryC') === 'true';
+    var showCategoryD = localStorage.getItem('showCategoryD') === 'true';
 
     markers.forEach(function (marker) {
         var categories = marker.categories;
         if (
             (categories.includes('A') && showCategoryA) ||
             (categories.includes('B') && showCategoryB) ||
-            (categories.includes('C') && showCategoryC)
+            (categories.includes('C') && showCategoryC) ||
+            (categories.includes('D') && showCategoryD)
         ) {
             marker.setMap(map);
         } else {
@@ -106,7 +108,8 @@ window.addEventListener('storage', function (event) {
     if (
         event.key === 'showCategoryA' ||
         event.key === 'showCategoryB' ||
-        event.key === 'showCategoryC'
+        event.key === 'showCategoryC' ||
+        event.key === 'showCategoryD'
     ) {
         applySettings();
     }
