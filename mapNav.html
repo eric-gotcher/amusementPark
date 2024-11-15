@@ -1,70 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Show My Location and Default Location</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map</title>
     <style>
-        /* Define the size of the map container */
         #map {
             height: 500px;
-            width: 80%;
+            width: 100%;
         }
     </style>
 </head>
 <body>
 
-<h3>My Location and Default Location on Map</h3>
+<h3>Rides Map</h3>
 <div id="map"></div>
 
-    <!-- Navigation Bar -->
-    <div class="navbar">
-        <div class="left-nav">
-            <a href="home.html" class="nav-link">Home</a> 
-            <a href="ride_list.html" class="nav-link">Rides</a>
-            <a href="mapNav.html" class="nav-link">Map</a>
-            <a href="#" class="nav-link">Help</a>
-        </div>
-        <div class="right-nav">
-            <a href="#" class="nav-link">Profile</a> 
-        </div> 
-    </div>
-
-<button onclick="showAllMarkers()">Show All Rides</button>
-<button onclick="hideAllMarkers()">Hide All Rides</button>
-<button onclick="showMarkersByRating('A')">Show Category A Rides</button>
-<button onclick="showMarkersByRating('B')">Show Category B Rides</button>
-<button onclick="showMarkersByRating('C')">Show Category C Rides</button>
-
 <script>
-var map, userMarker, defaultMarker;
-var markers = []; // Initialize an array to hold all markers
-var infoWindow;   // InfoWindow to show titles
-var directionsService, directionsRenderer; // Directions service and renderer for navigation
+// Global variables to hold map and markers
+var map;
+var markers = [];
+var infoWindow;
 
-// Define the default location 
-var defaultLocation = { lat: 32.7561025211987, lng: -97.07243375722175 }; 
+function initMap() {
+    // Default location for the map center
+    var defaultLocation = { lat: 32.7561025211987, lng: -97.07243375722175 };
 
-// Function to apply saved settings to show/hide markers based on category
-function applySettings() {
-    const showCategoryA = localStorage.getItem('showCategoryA') === 'true';
-    const showCategoryB = localStorage.getItem('showCategoryB') === 'true';
-    const showCategoryC = localStorage.getItem('showCategoryC') === 'true';
-
-    markers.forEach(marker => {
-        if ((marker.accessRating === 'A' && showCategoryA) ||
-            (marker.accessRating === 'B' && showCategoryB) ||
-            (marker.accessRating === 'C' && showCategoryC)) {
-            marker.setMap(map); // Show the marker
-        } else {
-            marker.setMap(null); // Hide the marker
-        }
+    // Initialize map
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 16,
+        center: defaultLocation
     });
-    console.log("Applied settings:", showCategoryA, showCategoryB, showCategoryC); // Debugging log
+
+    infoWindow = new google.maps.InfoWindow();
+
+    // Add all the markers
+    addMarker({ lat: 32.75694774660049, lng: -97.06858634954958 }, 'Aquaman', ['A', 'C']);
+    addMarker({ lat: 32.75867956518985, lng: -97.0665944558818 }, 'Batman', ['B']);
+    addMarker({ lat: 32.757562316535875, lng: -97.067054891455 }, 'Batwing', ['C']);
+    addMarker({ lat: 32.75775980664769, lng: -97.06749839143542 }, 'Boomtown', ['A']);
+    addMarker({ lat: 32.757154197253314, lng: -97.0720959368577 }, 'Boot Scootin', ['B']);
+    addMarker({ lat: 32.75637875518429, lng: -97.06841704130149 }, 'Bugs Cloud Bouncer', ['C']);
+    addMarker({ lat: 32.75726920754156, lng: -97.06628719155061 }, 'Catwoman Whip', ['A']);
+    addMarker({ lat: 32.75687916891457, lng: -97.06778361202024 }, 'Cloud Bouncer', ['B']);
+    addMarker({ lat: 32.75912726546584, lng: -97.06800230384427 }, 'Bucket Blasters', ['C']);
+    addMarker({ lat: 32.755825529397704, lng: -97.07200652921023 }, 'El Diablo', ['A']);
+    addMarker({ lat: 32.755489433620255, lng: -97.0709131848416 }, 'Sombrero', ['B']);
+    addMarker({ lat: 32.75323847916851, lng: -97.06802371184325 }, 'Judge Roy Scream', ['C']);
+    addMarker({ lat: 32.757991473958874, lng: -97.0677503492011 }, 'Gunslinger', ['A']);
+    addMarker({ lat: 32.75731315275531, lng: -97.06689389616429 }, 'Justice League', ['B']);
+    addMarker({ lat: 32.755669332272035, lng: -97.07129106781014 }, 'Tea Cups', ['C']);
+    addMarker({ lat: 32.75548781011889, lng: -97.07155711109925 }, 'La Vibora', ['A']);
+    addMarker({ lat: 32.75784178390764, lng: -97.06661224784125 }, 'Mr. Freeze', ['B']);
+    addMarker({ lat: 32.758886637131965, lng: -97.07057433567623 }, 'Shock Wave', ['C']);
+    addMarker({ lat: 32.758384840744206, lng: -97.06868454595156 }, 'Superman', ['A']);
+    addMarker({ lat: 32.7570749439281, lng: -97.07255299151078 }, 'Texas Depot', ['B']);
+    addMarker({ lat: 32.75676784036096, lng: -97.0658927520594 }, 'Texas SkyScreamer', ['C']);
+    addMarker({ lat: 32.75685106292408, lng: -97.0652765520594 }, 'Riddler', ['A']);
+    addMarker({ lat: 32.7557677102804, lng: -97.07418512037097 }, 'Titan', ['B']);
+
+    // Load settings and apply visibility based on user preferences
+    applySettings();
 }
 
-// Function to show markers of a specific accessRating
-function showMarkersByRating(rating) {
-    markers.forEach(marker => {
-        if (marker.accessRating === rating) {
+// Function to add a marker
+function addMarker(location, title, categories) {
+    var marker = new google.maps.Marker({
+        position: location,
+        map: map,
+        title: title,
+        categories: categories // Store categories in marker
+    });
+
+    markers.push(marker);
+
+    // Add a click event to show marker info
+    google.maps.event.addListener(marker, 'click', function () {
+        infoWindow.setContent(title);
+        infoWindow.open(map, marker);
+    });
+}
+
+// Function to apply settings from localStorage
+function applySettings() {
+    var showCategoryA = localStorage.getItem('showCategoryA') === 'true';
+    var showCategoryB = localStorage.getItem('showCategoryB') === 'true';
+    var showCategoryC = localStorage.getItem('showCategoryC') === 'true';
+
+    markers.forEach(function (marker) {
+        var categories = marker.categories;
+        if (
+            (categories.includes('A') && showCategoryA) ||
+            (categories.includes('B') && showCategoryB) ||
+            (categories.includes('C') && showCategoryC)
+        ) {
             marker.setMap(map);
         } else {
             marker.setMap(null);
@@ -72,183 +101,22 @@ function showMarkersByRating(rating) {
     });
 }
 
-// Function to show all markers
-function showAllMarkers() {
-    markers.forEach(marker => marker.setMap(map));
-}
-
-// Function to hide all markers
-function hideAllMarkers() {
-    markers.forEach(marker => marker.setMap(null));
-}
-
-// Function to display route
-function displayRoute(origin, destination) {
-    directionsService.route(
-        {
-            origin: origin,
-            destination: destination,
-            travelMode: google.maps.TravelMode.WALKING
-        },
-        function(response, status) {
-            if (status === google.maps.DirectionsStatus.OK) {
-                directionsRenderer.setDirections(response);
-            } else {
-                alert('Could not display route due to: ' + status);
-            }
-        }
-    );
-}
-
-// Function to add a marker with a title, accessRating, and attach an InfoWindow
-function addMarker(location, title, accessRating) {
-    const marker = new google.maps.Marker({
-        position: location,
-        map: map,
-        title: title,
-        accessRating: accessRating
-    });
-    markers.push(marker);
-
-    // Single-click to show marker info in an info window
-    google.maps.event.addListener(marker, 'click', function() {
-        if (infoWindow) infoWindow.close();
-        infoWindow = new google.maps.InfoWindow({ content: title });
-        infoWindow.open(map, marker);
-    });
-
-    // Double-click to trigger route display
-    google.maps.event.addListener(marker, 'dblclick', function() {
-        if (userMarker) {
-            displayRoute(defaultMarker.getPosition(), marker.getPosition());
-        } else {
-            alert("User location not available yet.");
-        }
-    });
-}
-
-// Initialize and add the map
-function initMap() {
-    // Create the map centered at the default location
-    map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 16,
-        center: defaultLocation
-    });
-
-    // Initialize DirectionsService and DirectionsRenderer
-    directionsService = new google.maps.DirectionsService();
-    directionsRenderer = new google.maps.DirectionsRenderer();
-    directionsRenderer.setMap(map);
-
-    // Create a marker for the default location and store it in the array
-    defaultMarker = new google.maps.Marker({
-        position: defaultLocation,
-        map: map
-    });
-    markers.push(defaultMarker); // Add the default marker to the markers array
-
-    addMarker({lat: 32.75694774660049, lng: -97.06858634954958}, 'Aquaman', 'A');
-    addMarker({lat: 32.75867956518985, lng: -97.0665944558818}, 'Batman', 'B');
-    addMarker({lat: 32.757562316535875, lng: -97.067054891455}, 'Batwing', 'C');
-    addMarker({lat: 32.75775980664769, lng: -97.06749839143542}, 'Boomtown', 'A');
-    addMarker({lat: 32.757154197253314, lng: -97.0720959368577}, 'Boot Scootin', 'B');
-    addMarker({lat: 32.75637875518429, lng: -97.06841704130149}, 'Bugs Cloud Bouncer', 'C');
-    addMarker({lat: 32.75726920754156, lng: -97.06628719155061}, 'Catwoman Whip', 'A');
-    addMarker({lat: 32.75687916891457, lng: -97.06778361202024}, 'Cloud Bouncer', 'B');
-    addMarker({lat: 32.75912726546584, lng: -97.06800230384427}, 'Bucket Blasters', 'C');
-    addMarker({lat: 32.755825529397704, lng: -97.07200652921023}, 'El Diablo', 'A');
-    addMarker({lat: 32.755489433620255, lng: -97.0709131848416}, 'Sombrero', 'B');
-    addMarker({lat: 32.75323847916851, lng: -97.06802371184325}, 'Judge Roy Scream', 'C');
-    addMarker({lat: 32.757991473958874, lng: -97.0677503492011}, 'Gunslinger', 'A');
-    addMarker({lat: 32.75731315275531, lng: -97.06689389616429}, 'Justice League', 'B');
-    addMarker({lat: 32.755669332272035, lng: -97.07129106781014}, 'Tea Cups', 'C');
-    addMarker({lat: 32.75548781011889, lng: -97.07155711109925}, 'La Vibora', 'A');
-    addMarker({lat: 32.75784178390764, lng: -97.06661224784125}, 'Mr. Freeze', 'B');
-    addMarker({lat: 32.758886637131965, lng: -97.07057433567623}, 'Shock Wave', 'C');
-    addMarker({lat: 32.758384840744206, lng: -97.06868454595156}, 'Superman', 'A');
-    addMarker({lat: 32.7570749439281, lng: -97.07255299151078}, 'Texas Depot', 'B');
-    addMarker({lat: 32.75676784036096, lng: -97.0658927520594}, 'Texas SkyScreamer', 'C');
-    addMarker({lat: 32.75685106292408, lng: -97.0652765520594}, 'Riddler', 'A');
-    addMarker({lat: 32.7557677102804, lng: -97.07418512037097}, 'Titan', 'B');
-
-    // Start tracking the user's location
-    trackUserLocation();
-
-    // Apply settings on load
-    applySettings();
-
-    // Set up an interval to listen for changes in settings and apply them
-    setInterval(applySettings, 1000);
-}
-
-// Function to track the user's location
-function trackUserLocation() {
-    if (navigator.geolocation) {
-        // Watch the position and update the user's marker in real-time
-        navigator.geolocation.watchPosition(
-            updateUserLocation, // Callback for position updates
-            showError, // Error handling
-            { enableHighAccuracy: true } // High accuracy for better tracking
-        );
-    } else {
-        alert("Geolocation is not supported by this browser.");
+// Listen for storage changes and update the map accordingly
+window.addEventListener('storage', function (event) {
+    if (
+        event.key === 'showCategoryA' ||
+        event.key === 'showCategoryB' ||
+        event.key === 'showCategoryC'
+    ) {
+        applySettings();
     }
-}
+});
 
-// Function to update the user's position
-function updateUserLocation(position) {
-    var userLocation = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-    };
-
-    // If the user marker doesn't exist, create it
-    if (!userMarker) {
-        userMarker = new google.maps.Marker({
-            position: userLocation,
-            map: map,
-            title: 'My Location',
-            icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-        });
-
-        // Add the user marker to the map
-        markers.push(userMarker); // Add the user's marker to the array
-
-        // Add a listener to the user's marker to trigger route on double-click
-        google.maps.event.addListener(userMarker, 'dblclick', function() {
-            markers.forEach(marker => {
-                if (marker !== userMarker) {
-                    displayRoute(userMarker.getPosition(), marker.getPosition());
-                }
-            });
-        });
-    } else {
-        // Update the user's marker position if it already exists
-        userMarker.setPosition(userLocation);
-    }
-}
-
-// Error handling for geolocation
-function showError(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            alert("User denied the request for Geolocation.");
-            break;
-        case error.POSITION_UNAVAILABLE:
-            alert("Location information is unavailable.");
-            break;
-        case error.TIMEOUT:
-            alert("The request to get user location timed out.");
-            break;
-        case error.UNKNOWN_ERROR:
-            alert("An unknown error occurred.");
-            break;
-    }
-}
+// Load the map when the page is ready
+window.onload = initMap;
 
 </script>
 
-<!-- Include the Google Maps JavaScript API (replace YOUR_API_KEY with your actual key) -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIj_NqWo62GER45QxwIjmrTLR82rHT83U&callback=initMap&libraries=places" async defer></script>
 
 </body>
