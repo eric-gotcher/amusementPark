@@ -6,12 +6,12 @@
     <title>Get Started Now</title>
     <link rel="stylesheet" href="loginstyle.css">
 
-    <!-- Firebase SDK - Make sure to replace YOUR_FIREBASE_CONFIG_VALUES -->
+    <!-- Firebase Setup (Identical to login.html) -->
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js"></script>
 
     <script>
-        // Firebase Configuration (Replace placeholders with actual values)
+        // Firebase Configuration (Same as in login.html)
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_AUTH_DOMAIN",
@@ -23,6 +23,7 @@
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
     </script>
 </head>
 <body>
@@ -57,7 +58,6 @@
     </div>
 
     <script>
-        const auth = firebase.auth();
         const signupForm = document.getElementById('signupForm');
 
         signupForm.addEventListener('submit', async (e) => {
