@@ -6,12 +6,12 @@
     <title>Get Started Now</title>
     <link rel="stylesheet" href="loginstyle.css">
 
-    <!-- Firebase Setup -->
+    <!-- Firebase SDK - Make sure to replace YOUR_FIREBASE_CONFIG_VALUES -->
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js"></script>
 
     <script>
-        // Firebase Configuration (Same as login.html)
+        // Firebase Configuration (Replace placeholders with actual values)
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_AUTH_DOMAIN",
@@ -22,8 +22,7 @@
         };
 
         // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.getAuth(app);
+        firebase.initializeApp(firebaseConfig);
     </script>
 </head>
 <body>
@@ -57,10 +56,8 @@
         </div>
     </div>
 
-    <script type="module">
-        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
-
-        const auth = getAuth();
+    <script>
+        const auth = firebase.auth();
         const signupForm = document.getElementById('signupForm');
 
         signupForm.addEventListener('submit', async (e) => {
@@ -78,7 +75,7 @@
 
             try {
                 // Create user with email and password
-                await createUserWithEmailAndPassword(auth, email, password);
+                await auth.createUserWithEmailAndPassword(email, password);
                 alert("Signup successful! Redirecting to login page...");
                 window.location.href = "login.html";
             } catch (error) {
