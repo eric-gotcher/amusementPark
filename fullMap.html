@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>Show My Location and Default Location</title>
+   
+    <link rel="stylesheet" href="mapstyles.css">
     <style>
         /* Define the size of the map container */
         #map {
@@ -16,6 +18,7 @@
 <div id="map"></div>
 
 <button onclick="showAllMarkers()">Show All Rides</button>
+
 <button onclick="hideAllMarkers()">Hide All Rides</button>
 <button onclick="showMarkersByRating('A')">Show Category A Rides</button>
 <button onclick="showMarkersByRating('B')">Show Category B Rides</button>
@@ -166,9 +169,11 @@ function showError(error) {
             break;
     }
 }
+
 </script>
 
 <!-- Load the Google Maps API with API key -->
+<script src="mapscript.js"></script>
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIj_NqWo62GER45QxwIjmrTLR82rHT83U&callback=initMap">
 </script>
