@@ -8,19 +8,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"> <!-- Correct path to your CSS -->
 
-    <!-- Defer loading of JavaScript modules -->
-    <!--<script type="module" defer src="main.js"></script> --> 
-    <!-- Ensure this script contains your Firebase registration logic --> 
-     <script src="https://apis.google.com/js/platform.js" async defer></script> <!--Including the Google Platform Library-->
-     <!-- Firebase SDK with non-module URLs -->
-     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <meta name="google-signin-client_id" content="958503110657-gnlj7no8r9be3j1tg81g50b8vodpgeiu.apps.googleusercontent.com">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
     <script>
-        // Firebase Configuration (Make sure to replace with your actual configuration values)
+        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyBn7xE-jaEuixzyDROnbHrQo6-YtOR5LaU",
             authDomain: "amusement-park-4039d.firebaseapp.com",
@@ -31,63 +25,171 @@
             measurementId: "G-6QHBHT0PPE"
         };
 
-        // Initialize Firebase with respect to the main.js file
+        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
     </script>
+
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #6CB11B;
+            background-image: url('back.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Background Blur */
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(108, 177, 27, 0.7); /* Semi-transparent green */
+            filter: blur(3px);
+            z-index: -1;
+        }
+
+        /* Centered Login Box */
+        .login-box {
+            background-color: rgba(255, 255, 255, 0.95); /* Slightly translucent white */
+            border: 2px solid #6CB11B; /* Green border for definition */
+            border-radius: 10px;
+            box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3); /* Strong shadow for separation */
+            padding: 40px;
+            width: 400px;
+            text-align: center;
+        }
+
+        .login-box h3 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 24px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background-color: #6CB11B;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .login-box button:hover {
+            background-color: #5aa015;
+        }
+
+        .social {
+            margin: 20px 0;
+        }
+
+        .social button {
+            background-color: #4285F4;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .social button:hover {
+            background-color: #357ae8;
+        }
+
+        .form p {
+            margin-top: 20px;
+        }
+
+        .form a {
+            color: #6CB11B;
+            text-decoration: none;
+        }
+
+        .form a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="background">
-        <div class="shape"></div>
-        <div class="shape"></div>
-    </div>
+    <div class="background-overlay"></div>
 
-    <form id="loginForm">
+    <div class="login-box">
         <h3>Login</h3>
 
-        <!-- Input for Email -->
-        <input type="email" placeholder="Email" id="email" required>
+        <!-- Login Form -->
+        <form id="loginForm">
+            <input type="email" placeholder="Email" id="email" required>
+            <input type="password" placeholder="Password" id="password" required>
+            <button id="submit" type="submit">Login Here</button>
+        </form>
 
-        <!-- Input for Password -->
-        <input type="password" placeholder="Password" id="password" required>
-
-        <!-- Submit Button -->
-        <button id="submit" type="submit">Login Here</button>
-
-        <!-- Social Media Login (Optional) -->
+        <!-- Google Sign-In -->
         <div class="social">
-            <div class="g-signin2" data-onsuccess="onSignIn"></div>
-            </div>
+            <button id="googleSignIn" type="button">Sign in with Google</button>
+        </div>
 
         <!-- Redirect to signup page -->
         <div class="form">
-            <p>Don't have an account?
-                <span> <a href="signup.html">Sign up Here</a></span> <!-- Adjust this to your login page -->
-            </p>
+            <p>Don't have an account? <a href="signup.html">Sign up Here</a></p>
         </div>
-    </form>
+    </div>
+
     <script>
         const auth = firebase.auth();
         const loginForm = document.getElementById('loginForm');
+        const googleSignInButton = document.getElementById('googleSignIn');
 
+        // Email/Password Login
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
             try {
-                // Sign in the user with email and password
                 await auth.signInWithEmailAndPassword(email, password);
                 alert("Login successful! Redirecting to homepage...");
-                window.location.href = "home.html"; // Replace with your actual homepage
+                window.location.href = "home.html"; // Redirect to homepage
+            } catch (error) {
+                console.error(error);
+                alert("Error: " + error.message);
+            }
+        });
+
+        // Google Sign-In
+        googleSignInButton.addEventListener('click', async () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            try {
+                const result = await auth.signInWithPopup(provider);
+                alert(`Welcome ${result.user.displayName}! Redirecting to homepage...`);
+                window.location.href = "home.html"; // Redirect to homepage
             } catch (error) {
                 console.error(error);
                 alert("Error: " + error.message);
             }
         });
     </script>
-
 </body>
 
 </html>
