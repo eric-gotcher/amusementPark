@@ -4,14 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account</title>
+    <title>Login Page</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css"> <!-- Correct path to your CSS -->
 
     <!-- Defer loading of JavaScript modules -->
-    <script type="module" defer src="main.js"></script> <!-- Ensure this script contains your Firebase registration logic -->
+    <!--<script type="module" defer src="main.js"></script> --> 
+    <!-- Ensure this script contains your Firebase registration logic --> 
+     <script src="https://apis.google.com/js/platform.js" async defer></script> <!--Including the Google Platform Library-->
+     <!-- Firebase SDK with non-module URLs -->
+     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <meta name="google-signin-client_id" content="958503110657-gnlj7no8r9be3j1tg81g50b8vodpgeiu.apps.googleusercontent.com">
+
+    <script>
+        // Firebase Configuration (Make sure to replace with your actual configuration values)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBn7xE-jaEuixzyDROnbHrQo6-YtOR5LaU",
+            authDomain: "amusement-park-4039d.firebaseapp.com",
+            projectId: "amusement-park-4039d",
+            storageBucket: "amusement-park-4039d.appspot.com",
+            messagingSenderId: "625618396056",
+            appId: "1:625618396056:web:ff2907be3a1958ed9041ed",
+            measurementId: "G-6QHBHT0PPE"
+        };
+
+        // Initialize Firebase with respect to the main.js file
+        firebase.initializeApp(firebaseConfig);
+    </script>
 </head>
 
 <body>
@@ -20,33 +42,52 @@
         <div class="shape"></div>
     </div>
 
-    <form>
-        <h3>Create Account</h3>
+    <form id="loginForm">
+        <h3>Login</h3>
 
         <!-- Input for Email -->
-        <label for="email">Email</label>
         <input type="email" placeholder="Email" id="email" required>
 
         <!-- Input for Password -->
-        <label for="password">Password</label>
         <input type="password" placeholder="Password" id="password" required>
 
         <!-- Submit Button -->
-        <button id="submit" type="submit">Create Account</button>
+        <button id="submit" type="submit">Login Here</button>
 
         <!-- Social Media Login (Optional) -->
         <div class="social">
-            <div class="go" id="google"><i class="fab fa-google"></i> Google</div>
-            <div class="fb" id="facebook"><i class="fab fa-facebook"></i> Facebook</div>
-        </div>
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            </div>
 
-        <!-- Redirect to login page -->
+        <!-- Redirect to signup page -->
         <div class="form">
-            <p>Have an account?
-                <span> <a href="home.html">Login Here</a></span> <!-- Adjust this to your login page -->
+            <p>Don't have an account?
+                <span> <a href="signup.html">Sign up Here</a></span> <!-- Adjust this to your login page -->
             </p>
         </div>
     </form>
+    <script>
+        const auth = firebase.auth();
+        const loginForm = document.getElementById('loginForm');
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                // Sign in the user with email and password
+                await auth.signInWithEmailAndPassword(email, password);
+                alert("Login successful! Redirecting to homepage...");
+                window.location.href = "home.html"; // Replace with your actual homepage
+            } catch (error) {
+                console.error(error);
+                alert("Error: " + error.message);
+            }
+        });
+    </script>
+
 </body>
 
 </html>
