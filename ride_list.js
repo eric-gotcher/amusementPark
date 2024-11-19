@@ -115,4 +115,87 @@ document.addEventListener('DOMContentLoaded', () => {
         // Join the text array into a single string and insert it into the span
         accessibilityData.textContent = accessibilityText.join(', ') || "No accessibility information available";
     });
+
+    // Handle the sort button click event
+    const sortBtn = document.getElementById('sortBtn');
+    const sortModal = document.createElement('div'); // Create the modal dynamically
+    sortModal.classList.add('sort-modal');
+    sortModal.innerHTML = `
+        <div class="sort-modal-content">
+            <h2>Sort Preferences</h2>
+            <div class="sort-options">
+                <label>
+                    <input type="radio" name="sortOption" id="sortByName" checked> Sort by Name
+                </label><br>
+                <label>
+                    <input type="radio" name="sortOption" id="sortByHeight"> Sort by Minimum Height
+                </label><br>
+                <label>
+                    <input type="radio" name="sortOption" id="sortByDuration"> Sort by Duration
+                </label><br>
+            </div>
+            <div class="sort-order">
+                <label>
+                    <input type="radio" name="sortOrder" id="sortAsc" checked> Ascending (A-Z)
+                </label><br>
+                <label>
+                    <input type="radio" name="sortOrder" id="sortDesc"> Descending (Z-A)
+                </label><br>
+            </div>
+            <button id="applySortBtn">Apply Sort</button>
+            <button id="closeSortModalBtn">Close</button>
+        </div>
+    `;
+    document.body.appendChild(sortModal);
+
+    // Show the modal when sort button is clicked
+    sortBtn.addEventListener('click', () => {
+        sortModal.style.display = 'flex';
+    });
+
+    // Close the modal when the "Close" button is clicked
+    document.getElementById('closeSortModalBtn').addEventListener('click', () => {
+        sortModal.style.display = 'none';
+    });
+
+    // Handle the sort logic when Apply Sort is clicked
+    document.getElementById('applySortBtn').addEventListener('click', () => {
+        const sortByName = document.getElementById('sortByName').checked;
+        const sortByHeight = document.getElementById('sortByHeight').checked;
+        const sortByDuration = document.getElementById('sortByDuration').checked;
+        const sortAsc = document.getElementById('sortAsc').checked;  // Ascending order
+        const sortDesc = document.getElementById('sortDesc').checked; // Descending order
+
+        const rideArray = Array.from(rideContainers);
+        let sortOrder = sortAsc ? 1 : -1; // 1 for ascending, -1 for descending
+
+        if (sortByName) {
+            rideArray.sort((a, b) => {
+                const nameA = a.querySelector('h2').textContent.toLowerCase();
+                const nameB = b.querySelector('h2').textContent.toLowerCase();
+                return nameA.localeCompare(nameB) * sortOrder;  // Apply sort order
+            });
+        } else if (sortByHeight) {
+            rideArray.sort((a, b) => {
+                const heightA = parseInt(a.getAttribute('data-minHeight'));
+                const heightB = parseInt(b.getAttribute('data-minHeight'));
+                return (heightA - heightB) * sortOrder;  // Apply sort order
+            });
+        } else if (sortByDuration) {
+            rideArray.sort((a, b) => {
+                const durationA = parseInt(a.getAttribute('data-duration'));
+                const durationB = parseInt(b.getAttribute('data-duration'));
+                return (durationA - durationB) * sortOrder;  // Apply sort order
+            });
+        }
+
+        // Append the sorted rides back to the container
+        const ridesContainer = document.querySelector('.rides-container');
+        rideArray.forEach(ride => {
+            ridesContainer.appendChild(ride);
+        });
+
+        // Close the sort modal
+        sortModal.style.display = 'none';
+    });
 });
