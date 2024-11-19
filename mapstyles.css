@@ -1,0 +1,31 @@
+body {
+    display: flex;
+    flex-direction: column; /* Aligns children (h3 and div#map) in a column */
+    align-items: center; /* Center-aligns items horizontally */
+    justify-content: flex-start; /* Aligns items to start at the top of the viewport */
+    min-height: 100vh; /* Sets the minimum height of the body to the full viewport height */
+    background-color: #e2f0d9; /* Light green background for the overall page */
+    font-family: Arial, sans-serif; /* Optional: Change the font for better readability */
+    color: #336633; /* Dark green color for text */
+    margin: 0;
+    padding: 0;
+}
+
+/* Style the map container */
+#map {
+    height: 500px;
+    width: 80%; /* Adjust the width as needed */
+    background-color: #cde6c7; /* Slightly different green shade for the map background */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Adds shadow for better visibility */
+    border: 3px solid #205520; /* Solid green border around the map */
+    margin-top: 20px; /* Adds a gap of 20px above the map for spacing */
+}
+
+/* Style headings and text elements */
+h3 {
+    color: #205520; /* Darker green for text in headers */
+    padding: 5px;
+    margin: 20px 0 0 0; /* Adds margin only above the heading */
+    width: 100%; /* Ensures the header stretches full width */
+    text-align: center; /* Centers the text within the heading */
+}
