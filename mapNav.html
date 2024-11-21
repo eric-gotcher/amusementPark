@@ -52,7 +52,7 @@ function initMap() {
         { lat: 32.75694774660049, lng: -97.06858634954958, title: 'Aquaman', categories: ['A'] },
         { lat: 32.75867956518985, lng: -97.0665944558818, title: 'Batman', categories: ['A'] },
         { lat: 32.757562316535875, lng: -97.067054891455, title: 'Batwing', categories: ['A'] },
-        { lat: 32.75775980664769, lng: -97.06749839143542, title: 'Boomtown', categories: ['A', 'B'] },
+        { lat: 32.75775980664769, lng: -97.06749839143542, title: 'Boomtown', categories: ['A', 'B', 'E']},
         { lat: 32.757154197253314, lng: -97.0720959368577, title: 'Boot Scootin', categories: ['A'] },
         { lat: 32.75637875518429, lng: -97.06841704130149, title: 'Bugs Cloud Bouncer', categories: ['A'] },
         { lat: 32.75726920754156, lng: -97.06628719155061, title: 'Catwoman Whip', categories: ['A'] },
@@ -72,8 +72,8 @@ function initMap() {
         { lat: 32.75676784036096, lng: -97.0658927520594, title: 'Texas SkyScreamer', categories: ['C', 'D'] },
         { lat: 32.75685106292408, lng: -97.0652765520594, title: 'Riddler', categories: ['A'] },
         { lat: 32.7557677102804, lng: -97.07418512037097, title: 'Titan', categories: ['D'] },
-        { lat: 32.756423818467, lng: -97.0707233713286, title: 'Silver Star Carousel', categories: ['A', 'B', 'C'] },
-        { lat: 32.758398856366156, lng: -97.07091809461619, title: 'Oil Derrick', categories: ['A', 'B', 'C'] }
+        { lat: 32.756423818467, lng: -97.0707233713286, title: 'Silver Star Carousel', categories: ['A', 'B', 'C', 'E'] },
+        { lat: 32.758398856366156, lng: -97.07091809461619, title: 'Oil Derrick', categories: ['A', 'B', 'C', 'E'] }
     ];
 
     rides.forEach(ride => addMarker(ride));
@@ -132,6 +132,7 @@ function applySettings() {
     var showCategoryB = localStorage.getItem('showCategoryB') === 'true';
     var showCategoryC = localStorage.getItem('showCategoryC') === 'true';
     var showCategoryD = localStorage.getItem('showCategoryD') === 'true';
+    var showCategoryE = localStorage.getItem('showCategoryE') === 'true';
 
     markers.forEach(function (marker) {
         var categories = marker.categories;
@@ -139,7 +140,9 @@ function applySettings() {
             (categories.includes('A') && showCategoryA) ||
             (categories.includes('B') && showCategoryB) ||
             (categories.includes('C') && showCategoryC) ||
-            (categories.includes('D') && showCategoryD)
+            (categories.includes('D') && showCategoryD) ||
+            (categories.includes('E') && showCategoryE)
+            
         ) {
             marker.setMap(map);
         } else {
@@ -154,7 +157,8 @@ window.addEventListener('storage', function (event) {
         event.key === 'showCategoryA' ||
         event.key === 'showCategoryB' ||
         event.key === 'showCategoryC' ||
-        event.key === 'showCategoryD'
+        event.key === 'showCategoryD' ||
+        event.key === 'showCategoryE'
     ) {
         applySettings();
     }
