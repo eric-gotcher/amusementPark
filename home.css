@@ -45,3 +45,27 @@ header {
 .map-button:hover {
     background-color: #367C36;
 }
+
+.map-button-container {
+    position: absolute;
+    top: 50%; /* Adjust this value as needed */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.map-button {
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    margin: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.map-button:hover {
+    background-color: #367c39; /* Darker green on hover */
+}
