@@ -22,6 +22,8 @@
 var map;
 var markers = [];
 var infoWindow;
+var directionsService;
+var directionsRenderer;
 
 function initMap() {
     // Default location for the map center
@@ -34,6 +36,11 @@ function initMap() {
     });
 
     infoWindow = new google.maps.InfoWindow();
+    directionsService = new google.maps.DirectionsService();
+    directionsRenderer = new google.maps.DirectionsRenderer({
+        map: map,
+        panel: document.getElementById('directionsPanel')
+    });
 
     // Add all the markers
     addMarker({ lat: 32.75694774660049, lng: -97.06858634954958 }, 'Aquaman', ['A', 'C']);
@@ -79,9 +86,35 @@ function addMarker(location, title, categories) {
 
     // Add a click event to show marker info
     google.maps.event.addListener(marker, 'click', function () {
-        infoWindow.setContent(title);
+        infoWindow.setContent(title + '<br><button onclick="navigateToMarker(' + lat + ', ' + lng + ')">Navigate Here</button>');
         infoWindow.open(map, marker);
     });
+}
+
+// Function to navigate to a specific marker
+function navigateToMarker(lat, lng) {
+    var destination = new google.maps.LatLng(lat, lng);
+    calculateAndDisplayRoute(destination);
+}
+
+// Function to calculate and display the route
+function calculateAndDisplayRoute(destination) {
+    var start = { lat: 32.7561025211987, lng: -97.07243375722175 };
+
+    directionsService.route(
+        {
+            origin: start,
+            destination: destination,
+            travelMode: google.maps.TravelMode.WALKING
+        },
+        function (response, status) {
+            if (status === google.maps.DirectionsStatus.OK) {
+                directionsRenderer.setDirections(response);
+            } else {
+                alert('Directions request failed due to ' + status);
+            }
+        }
+    );
 }
 
 // Function to apply settings from localStorage
