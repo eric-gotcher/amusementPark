@@ -225,3 +225,20 @@ input[type="radio"] {
     justify-content: center; /* Align to the right */
     height: 100%
 }
+
+.filter-tag {
+    display: inline-block;
+    background-color: #002fff;
+    color: rgb(255, 255, 255);
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    text-transform: capitalize;
+    transition: background-color 0.3s ease;
+}
+
+.filter-tag:hover {
+    background-color: #1700e6;
+}

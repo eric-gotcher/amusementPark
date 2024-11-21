@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <button id="closeModalBtn">Close</button>
         </div>
     `;
+    let previousFilterState = {};
 
     // Append modal to body
     document.body.appendChild(preferencesModal);
@@ -32,13 +33,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Show the modal when filter button is clicked
     filterBtn.addEventListener('click', () => {
         preferencesModal.style.display = 'flex';
+        previousFilterState = {
+            wheelchair: document.getElementById('wheelchairCheckbox').checked,
+            serviceAnimal: document.getElementById('serviceAnimalCheckbox').checked,
+            blank: document.getElementById('blankCheckbox').checked,
+            inaccessible: document.getElementById('inaccessibleCheckbox').checked
+        };
     });
-
-    
 
     // Close the modal when the "Close" button is clicked
     document.getElementById('closeModalBtn').addEventListener('click', () => {
+        document.getElementById('wheelchairCheckbox').checked = previousFilterState.wheelchair;
+        document.getElementById('serviceAnimalCheckbox').checked = previousFilterState.serviceAnimal;
+        document.getElementById('blankCheckbox').checked = previousFilterState.blank;
+        document.getElementById('inaccessibleCheckbox').checked = previousFilterState.inaccessible;
+
+        // Close the modal
         preferencesModal.style.display = 'none';
+
+        // Reapply the filters with the previous state
+        applyFilters();
     });
 
     // Handle the filter logic when Apply Filters is clicked
@@ -100,20 +114,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Check each attribute and add the appropriate text
         if (wheelchair === 'true') {
-            accessibilityText.push("Wheelchair Accessible");
+            accessibilityText.push("<span class='filter-tag' data-filter='wheelchair'>Wheelchair Accessible</span>");
         }
         if (serviceAnimal === 'true') {
-            accessibilityText.push("Service Animal Allowed");
+            accessibilityText.push("<span class='filter-tag' data-filter='serviceAnimal'>Service Animal Allowed</span>");
         }
         if (blank === 'true') {
-            accessibilityText.push("Show _____");
+            accessibilityText.push("<span class='filter-tag' data-filter='blank'>Show _____</span>");
         }
         if (inaccessible === 'true') {
-            accessibilityText.push("Inaccessible");
+            accessibilityText.push("<span class='filter-tag' data-filter='inaccessible'>Inaccessible</span>");
         }
 
         // Join the text array into a single string and insert it into the span
-        accessibilityData.textContent = accessibilityText.join(', ') || "No accessibility information available";
+        accessibilityData.innerHTML = accessibilityText.join('') || "No accessibility information available";
     });
 
     // Handle the sort button click event
@@ -199,3 +213,42 @@ document.addEventListener('DOMContentLoaded', () => {
         sortModal.style.display = 'none';
     });
 });
+
+document.addEventListener('click', (event) => {
+    if (event.target && event.target.classList.contains('filter-tag')) {
+        const filterType = event.target.getAttribute('data-filter');
+        const filterCheckbox = document.getElementById(`${filterType}Checkbox`);
+
+        filterCheckbox.checked = !filterCheckbox.checked;
+
+        applyFilters();
+    }
+});
+
+// Apply the filter
+function applyFilters() {
+    const wheelchairChecked = document.getElementById('wheelchairCheckbox').checked;
+    const serviceAnimalChecked = document.getElementById('serviceAnimalCheckbox').checked;
+    const blankChecked = document.getElementById('blankCheckbox').checked;
+    const inaccessibleChecked = document.getElementById('inaccessibleCheckbox').checked;
+
+    const rideContainers = document.querySelectorAll('.ride-container');
+    rideContainers.forEach(ride => {
+        const hasWheelchair = ride.getAttribute('data-wheelchair') === 'true';
+        const hasServiceAnimal = ride.getAttribute('data-serviceAnimal') === 'true';
+        const hasBlank = ride.getAttribute('data-blank') === 'true';
+        const hasInaccessible = ride.getAttribute('data-inaccessible') === 'true';
+
+        const matchesFilter =
+            (!wheelchairChecked || hasWheelchair) &&
+            (!serviceAnimalChecked || hasServiceAnimal) &&
+            (!blankChecked || hasBlank) &&
+            (!inaccessibleChecked || hasInaccessible);
+
+        if (matchesFilter) {
+            ride.style.display = 'flex';
+        } else {
+            ride.style.display = 'none';
+        }
+    });
+}
