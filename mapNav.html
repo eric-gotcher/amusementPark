@@ -49,9 +49,9 @@ function initMap() {
 
     // Add all the markers
     const rides = [
-        { lat: 32.75694774660049, lng: -97.06858634954958, title: 'Aquaman', categories: ['A', 'C'] },
-        { lat: 32.75867956518985, lng: -97.0665944558818, title: 'Batman', categories: ['B'] },
-        { lat: 32.757562316535875, lng: -97.067054891455, title: 'Batwing', categories: ['C'] },
+        { lat: 32.75694774660049, lng: -97.06858634954958, title: 'Aquaman', categories: ['A'] },
+        { lat: 32.75867956518985, lng: -97.0665944558818, title: 'Batman', categories: ['A'] },
+        { lat: 32.757562316535875, lng: -97.067054891455, title: 'Batwing', categories: ['A'] },
         { lat: 32.75775980664769, lng: -97.06749839143542, title: 'Boomtown', categories: ['A', 'B'] },
         { lat: 32.757154197253314, lng: -97.0720959368577, title: 'Boot Scootin', categories: ['A'] },
         { lat: 32.75637875518429, lng: -97.06841704130149, title: 'Bugs Cloud Bouncer', categories: ['A'] },
@@ -62,8 +62,8 @@ function initMap() {
         { lat: 32.755489433620255, lng: -97.0709131848416, title: 'Sombrero', categories: ['A'] },
         { lat: 32.75323847916851, lng: -97.06802371184325, title: 'Judge Roy Scream', categories: ['A'] },
         { lat: 32.757991473958874, lng: -97.0677503492011, title: 'Gunslinger', categories: ['A'] },
-        { lat: 32.75731315275531, lng: -97.06689389616429, title: 'Justice League', categories: ['A'] },
-        { lat: 32.755669332272035, lng: -97.07129106781014, title: 'Tea Cups', categories: ['A'] },
+        { lat: 32.75731315275531, lng: -97.06689389616429, title: 'Justice League', categories: ['A', 'C'] },
+        { lat: 32.755669332272035, lng: -97.07129106781014, title: 'Tea Cups', categories: ['A', 'C'] },
         { lat: 32.75548781011889, lng: -97.07155711109925, title: 'La Vibora', categories: ['A'] },
         { lat: 32.75784178390764, lng: -97.06661224784125, title: 'Mr. Freeze', categories: ['A'] },
         { lat: 32.758886637131965, lng: -97.07057433567623, title: 'Shock Wave', categories: ['A'] },
@@ -72,8 +72,8 @@ function initMap() {
         { lat: 32.75676784036096, lng: -97.0658927520594, title: 'Texas SkyScreamer', categories: ['C', 'D'] },
         { lat: 32.75685106292408, lng: -97.0652765520594, title: 'Riddler', categories: ['A'] },
         { lat: 32.7557677102804, lng: -97.07418512037097, title: 'Titan', categories: ['D'] },
-        { lat: 32.756423818467, lng: -97.0707233713286, title: 'Silver Star Carousel', categories: ['A', 'B'] },
-        { lat: 32.758398856366156, lng: -97.07091809461619, title: 'Oil Derrick', categories: ['A', 'B'] }
+        { lat: 32.756423818467, lng: -97.0707233713286, title: 'Silver Star Carousel', categories: ['A', 'B', 'C'] },
+        { lat: 32.758398856366156, lng: -97.07091809461619, title: 'Oil Derrick', categories: ['A', 'B', 'C'] }
     ];
 
     rides.forEach(ride => addMarker(ride));
