@@ -10,12 +10,17 @@
             height: 500px;
             width: 100%;
         }
+        #directionsPanel {
+            margin-top: 20px;
+            font-family: Arial, sans-serif;
+        }
     </style>
 </head>
 <body>
 
 <h3>Rides Map</h3>
 <div id="map"></div>
+<div id="directionsPanel"><strong>Directions:</strong> Follow the steps below to navigate.</div>
 
 <script>
 // Global variables to hold map and markers
@@ -43,43 +48,47 @@ function initMap() {
     });
 
     // Add all the markers
-    addMarker({ lat: 32.75694774660049, lng: -97.06858634954958 }, 'Aquaman', ['A', 'C']);
-    addMarker({ lat: 32.75867956518985, lng: -97.0665944558818 }, 'Batman', ['B']);
-    addMarker({ lat: 32.757562316535875, lng: -97.067054891455 }, 'Batwing', ['C']);
-    addMarker({ lat: 32.75775980664769, lng: -97.06749839143542 }, 'Boomtown', ['A', 'B']);
-    addMarker({ lat: 32.757154197253314, lng: -97.0720959368577 }, 'Boot Scootin', ['A']);
-    addMarker({ lat: 32.75637875518429, lng: -97.06841704130149 }, 'Bugs Cloud Bouncer', ['A']);
-    addMarker({ lat: 32.75726920754156, lng: -97.06628719155061 }, 'Catwoman Whip', ['A']);
-    addMarker({ lat: 32.75687916891457, lng: -97.06778361202024 }, 'Cloud Bouncer', ['A']);
-    addMarker({ lat: 32.75912726546584, lng: -97.06800230384427 }, 'Bucket Blasters', ['A']);
-    addMarker({ lat: 32.755825529397704, lng: -97.07200652921023 }, 'El Diablo', ['A']);
-    addMarker({ lat: 32.755489433620255, lng: -97.0709131848416 }, 'Sombrero', ['A']);
-    addMarker({ lat: 32.75323847916851, lng: -97.06802371184325 }, 'Judge Roy Scream', ['A']);
-    addMarker({ lat: 32.757991473958874, lng: -97.0677503492011 }, 'Gunslinger', ['A']);
-    addMarker({ lat: 32.75731315275531, lng: -97.06689389616429 }, 'Justice League', ['A']);
-    addMarker({ lat: 32.755669332272035, lng: -97.07129106781014 }, 'Tea Cups', ['A']);
-    addMarker({ lat: 32.75548781011889, lng: -97.07155711109925 }, 'La Vibora', ['A']);
-    addMarker({ lat: 32.75784178390764, lng: -97.06661224784125 }, 'Mr. Freeze', ['A']);
-    addMarker({ lat: 32.758886637131965, lng: -97.07057433567623 }, 'Shock Wave', ['A']);
-    addMarker({ lat: 32.758384840744206, lng: -97.06868454595156 }, 'Superman', ['A']);
-    addMarker({ lat: 32.7570749439281, lng: -97.07255299151078 }, 'Texas Depot', ['A', 'B']);
-    addMarker({ lat: 32.75676784036096, lng: -97.0658927520594 }, 'Texas SkyScreamer', ['C', 'D']);
-    addMarker({ lat: 32.75685106292408, lng: -97.0652765520594 }, 'Riddler', ['A']);
-    addMarker({ lat: 32.7557677102804, lng: -97.07418512037097 }, 'Titan', ['D']);
-    addMarker({ lat: 32.756423818467, lng: -97.0707233713286 }, 'Silver Star Carousel', ['A', 'B']);
-    addMarker({ lat: 32.758398856366156, lng: -97.07091809461619}, 'Oil Derrick', ['A', 'B']);
+    const rides = [
+        { lat: 32.75694774660049, lng: -97.06858634954958, title: 'Aquaman', categories: ['A', 'C'] },
+        { lat: 32.75867956518985, lng: -97.0665944558818, title: 'Batman', categories: ['B'] },
+        { lat: 32.757562316535875, lng: -97.067054891455, title: 'Batwing', categories: ['C'] },
+        { lat: 32.75775980664769, lng: -97.06749839143542, title: 'Boomtown', categories: ['A', 'B'] },
+        { lat: 32.757154197253314, lng: -97.0720959368577, title: 'Boot Scootin', categories: ['A'] },
+        { lat: 32.75637875518429, lng: -97.06841704130149, title: 'Bugs Cloud Bouncer', categories: ['A'] },
+        { lat: 32.75726920754156, lng: -97.06628719155061, title: 'Catwoman Whip', categories: ['A'] },
+        { lat: 32.75687916891457, lng: -97.06778361202024, title: 'Cloud Bouncer', categories: ['A'] },
+        { lat: 32.75912726546584, lng: -97.06800230384427, title: 'Bucket Blasters', categories: ['A'] },
+        { lat: 32.755825529397704, lng: -97.07200652921023, title: 'El Diablo', categories: ['A'] },
+        { lat: 32.755489433620255, lng: -97.0709131848416, title: 'Sombrero', categories: ['A'] },
+        { lat: 32.75323847916851, lng: -97.06802371184325, title: 'Judge Roy Scream', categories: ['A'] },
+        { lat: 32.757991473958874, lng: -97.0677503492011, title: 'Gunslinger', categories: ['A'] },
+        { lat: 32.75731315275531, lng: -97.06689389616429, title: 'Justice League', categories: ['A'] },
+        { lat: 32.755669332272035, lng: -97.07129106781014, title: 'Tea Cups', categories: ['A'] },
+        { lat: 32.75548781011889, lng: -97.07155711109925, title: 'La Vibora', categories: ['A'] },
+        { lat: 32.75784178390764, lng: -97.06661224784125, title: 'Mr. Freeze', categories: ['A'] },
+        { lat: 32.758886637131965, lng: -97.07057433567623, title: 'Shock Wave', categories: ['A'] },
+        { lat: 32.758384840744206, lng: -97.06868454595156, title: 'Superman', categories: ['A'] },
+        { lat: 32.7570749439281, lng: -97.07255299151078, title: 'Texas Depot', categories: ['A', 'B'] },
+        { lat: 32.75676784036096, lng: -97.0658927520594, title: 'Texas SkyScreamer', categories: ['C', 'D'] },
+        { lat: 32.75685106292408, lng: -97.0652765520594, title: 'Riddler', categories: ['A'] },
+        { lat: 32.7557677102804, lng: -97.07418512037097, title: 'Titan', categories: ['D'] },
+        { lat: 32.756423818467, lng: -97.0707233713286, title: 'Silver Star Carousel', categories: ['A', 'B'] },
+        { lat: 32.758398856366156, lng: -97.07091809461619, title: 'Oil Derrick', categories: ['A', 'B'] }
+    ];
+
+    rides.forEach(ride => addMarker(ride));
 
     // Load settings and apply visibility based on user preferences
     applySettings();
 }
 
 // Function to add a marker
-function addMarker(location, title, categories) {
+function addMarker({ lat, lng, title, categories }) {
     var marker = new google.maps.Marker({
-        position: location,
-        map: map,
+        position: { lat, lng },
+        map: null, // Default to not visible until settings are applied
         title: title,
-        categories: categories // Store categories in marker
+        categories: categories
     });
 
     markers.push(marker);
