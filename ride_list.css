@@ -8,22 +8,23 @@ body {
 }
 
 body::before {
-content: '';
-position: fixed;
-top: 0;
-left: 0;
-background-color: #6CB11B;
-background-image: url('back.png'); 
-background-size: cover;
-background-position: center;
-height: 100vh;
-width: 100vw;
-z-index: -1; 
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #6CB11B;
+    background-image: url('back.png'); 
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100vw;
+    z-index: -1;
+    filter: blur(2px);
 }
 
 header {
     background: #a0674f;
-    color: white;
+    color: rgba(255, 255, 255, 0.744);
     padding: 10px 20px;
     text-align: center;
     position: fixed;
@@ -80,11 +81,21 @@ header {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
+.preference:hover{
+    background-color: #9a6900;
+    color: rgb(250, 250, 250);
+}
+
+.nav-link:hover {
+    color:rgb(0, 0, 0);
+}
+
 .blank{
     margin-top: 75px;
 }
 
 .ride-container {
+    background-color: #cff7d3;
     display: flex;
     align-items: center;
     margin-top: 30px; 
@@ -114,21 +125,6 @@ header {
     right: 10px; 
 }
 
-.reviews-button {
-    display: inline-block;
-    background-color: #e3e3e3; 
-    color: rgb(0, 0, 0); 
-    padding: 10px 20px; 
-    margin-right: 10px; 
-    text-decoration: none; 
-    border-radius: 5px; 
-    transition: background-color 0.3s; 
-}
-
-.reviews-button:hover {
-    background-color: #f0f0f0; 
-}
-
 .directions-button {
     display: inline-block;
     background-color: #000000; 
@@ -141,7 +137,7 @@ header {
 }
 
 .directions-button:hover {
-    background-color: #f0f0f0;
+    background-color: #505050;
 }
 
 /* Modal styling */
