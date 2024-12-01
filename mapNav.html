@@ -80,6 +80,14 @@ function initMap() {
 
     // Load settings and apply visibility based on user preferences
     applySettings();
+
+    // Handle query parameters for navigation
+    const params = new URLSearchParams(window.location.search);
+    const lat = parseFloat(params.get('lat'));
+    const lng = parseFloat(params.get('lng'));
+    if (!isNaN(lat) && !isNaN(lng)) {
+        calculateAndDisplayRoute(new google.maps.LatLng(lat, lng));
+    }
 }
 
 // Function to add a marker
@@ -125,6 +133,7 @@ function calculateAndDisplayRoute(destination) {
         }
     );
 }
+
 
 // Function to apply settings from localStorage
 function applySettings() {
