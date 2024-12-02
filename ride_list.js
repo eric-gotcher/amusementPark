@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
             accessibilityText.push("<span class='filter-tag' data-filter='serviceAnimal'>Service Animal Allowed</span>");
         }
         if (blank === 'true') {
-            accessibilityText.push("<span class='filter-tag' data-filter='blank'>Show _____</span>");
+            accessibilityText.push("<span class='filter-tag' data-filter='blank'>Show Rides Accessible to Pregnant People</span>");
         }
         if (inaccessible === 'true') {
             accessibilityText.push("<span class='filter-tag' data-filter='inaccessible'>Inaccessible</span>");
