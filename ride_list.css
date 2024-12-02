@@ -120,9 +120,7 @@ header {
 }
 
 .button-container {
-    position: absolute; 
-    bottom: 10px; 
-    right: 10px; 
+    float: right;
 }
 
 .directions-button {
@@ -142,13 +140,13 @@ header {
 
 /* Modal styling */
 .preferences-modal {
-    display: none; /* Hidden by default */
+    display: none; 
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.5); 
     justify-content: center;
     align-items: center;
     z-index: 1000;
@@ -216,13 +214,13 @@ input[type="radio"] {
 
 .sort-options {
     display: start;
-    justify-content: center; /* Align to the right */
+    justify-content: center; 
     height: 100%
 }
 
 .sort-order {
     display: flex;
-    justify-content: center; /* Align to the right */
+    justify-content: center; 
     height: 100%
 }
 
