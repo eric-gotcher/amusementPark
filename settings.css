@@ -155,3 +155,39 @@ input:checked + .slider {
 input:checked + .slider:before {
     transform: translateX(20px);
 }
+.save-button-container{
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    transform: skewY(2.5deg);
+}
+
+.save-button {
+    display: inline-block;
+    background-color: #4CAF50   ; 
+    color: rgb(255, 255, 255); 
+    padding: 10px 20px; 
+    margin-right: 10px; 
+    text-decoration: none; 
+    border-radius: 5px; 
+    transition: background-color 0.3s;
+}
+
+.save-button:hover{
+    background-color: #1f7122;
+}
+
+.close-button {
+    display: inline-block;
+    background-color: #ffffff   ; 
+    color: rgb(0, 0, 0); 
+    padding: 10px 20px; 
+    margin-right: 10px; 
+    text-decoration: none; 
+    border-radius: 5px; 
+    transition: background-color 0.3s;
+}
+
+.close-button:hover{
+    background-color: #9a9a9a;
+}
