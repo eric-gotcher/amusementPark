@@ -191,3 +191,21 @@ input:checked + .slider:before {
 .close-button:hover{
     background-color: #9a9a9a;
 }
+
+/* Description styling */
+.settings-description {
+    margin: 20px 0;
+    font-size: 18px;
+    color: white;
+    line-height: 1.6;
+    transform: skewY(2.5deg);
+}
+
+.settings-description a {
+    color: #4CAF50;
+    text-decoration: underline;
+}
+
+.settings-description a:hover {
+    color: #1f7122;
+}
