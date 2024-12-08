@@ -4,12 +4,81 @@ body {
     align-items: center; /* Center-aligns items horizontally */
     justify-content: flex-start; /* Aligns items to start at the top of the viewport */
     min-height: 100vh; /* Sets the minimum height of the body to the full viewport height */
-    background-color: #e2f0d9; /* Light green background for the overall page */
+    background-color: #6CB11B; /* Light green background for the overall page */
     font-family: Arial, sans-serif; /* Optional: Change the font for better readability */
-    color: #336633; /* Dark green color for text */
+    color: #6CB11B; /* Dark green color for text */
     margin: 0;
     padding: 0;
 }
+
+/* Brown window styling */
+.brown-window {
+    background-color: #a0674f; /* Brown background color */
+    color: white;
+    padding: 20px;
+    margin: 20px auto;
+    width: 80%; /* Adjust width as necessary */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+#map {
+    height: 500px;
+    width: 100%; /* Make the map take the full width of the brown window */
+}
+
+#directionsPanel {
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+    text-align: left; /* Aligns text to the left */
+}
+
+/* Navbar styling */
+.navbar {
+    background-color: #a0674f;
+    padding: 1px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+}
+
+.left-nav,
+.right-nav {
+    display: flex;
+}
+
+.left-nav .nav-link {
+    margin: 0 15px; 
+    color: white;
+    padding: 15px 10px;
+    text-decoration: none; 
+    font-size: 18px;
+    font-weight: bold; 
+    align-self: center;
+}
+
+.right-nav .nav-link {
+    margin: 0 15px; 
+    color: white;
+    padding: 15px 75px 10px 10px;
+    text-decoration: none; 
+    font-size: 18px;
+    font-weight: bold; 
+    align-self: center;
+}
+
+.preference:hover{
+    background-color: #9a6900;
+    color: rgb(250, 250, 250);
+}
+
+.nav-link:hover {
+    color:rgb(0, 0, 0);
+}
+
 
 /* Style the map container */
 #map {
